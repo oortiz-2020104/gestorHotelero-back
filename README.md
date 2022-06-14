@@ -1,1 +1,1 @@
-# gestorHotelero-back
+# Back end proyecto de gestor hotelero
