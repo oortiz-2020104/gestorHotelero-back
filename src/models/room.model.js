@@ -1,8 +1,11 @@
 'use strict'
 const mongoose = require('mongoose')
 
-const roomSchema = Schema({
-    hotel: { type: Schema.ObjectId, ref: 'hotel' },
+const roomSchema = mongoose.Schema({
+    hotel: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'hotel'
+    },
     name: String,
     description: String,
     price: Number,

@@ -1,14 +1,26 @@
 'use strict'
 const mongoose = require('mongoose');
 
-const reservationSchema = Schema({
+const reservationSchema = mongoose.Schema({
     startDate: Date,
     endDate: Date,
     totalPrice: Number,
-    user: { type: Schema.ObjectId, ref: 'user' },
-    hotel: { type: Schema.ObjectId, ref: 'hotel' },
-    room: { type: Schema.ObjectId, ref: 'room' },
-    services: [{ type: Schema.ObjectId, ref: 'service' }],
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user'
+    },
+    hotel: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'hotel'
+    },
+    room: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'room'
+    },
+    services: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'service'
+    }],
 });
 
 module.exports = mongoose.model('reservation', reservationSchema)

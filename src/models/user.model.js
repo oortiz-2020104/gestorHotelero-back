@@ -1,7 +1,7 @@
 'use strict'
 const mongoose = require('mongoose')
 
-const userSchema = Schema({
+const userSchema = mongoose.Schema({
     name: String,
     surname: String,
     username: String,
@@ -10,9 +10,22 @@ const userSchema = Schema({
     image: String,
     role: String,
     phone: String,
-    reservations: [{ type: Schema.ObjectId, ref: 'reservation' }],
-    history: [{ type: Schema.ObjectId, ref: 'hotel' }],
-    bill: [{ type: Schema.ObjectId, ref: 'bill' }]
+    currentReservation: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'reservation'
+    },
+    reservations: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'reservation'
+    }],
+    history: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'hotel'
+    }],
+    bills: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'bill'
+    }]
 });
 
-module.exports = mongoose.model('user', userSchema)
+module.exports = mongoose.model('User', userSchema)
