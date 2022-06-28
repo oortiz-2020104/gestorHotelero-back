@@ -1,6 +1,7 @@
 'use strict'
 
 const User = require('../models/user.model');
+const Hotel = require('../models/hotel.model');
 
 const bcrypt = require('bcrypt-nodejs');
 const fs = require('fs')
@@ -178,6 +179,39 @@ exports.checkUpdateJourney = async (params) => {
 exports.checkUpdateMatch = async (params) => {
     try {
         if (Object.entries(params).length === 0) {
+            return false;
+        } else {
+            return true;
+        }
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+/* Hotel */
+
+exports.findHotel = async (name)=>{
+    try{
+     let exist = await Hotel.findOne({name:name}).lean()
+     return exist;
+    }catch(err){
+        return err;
+    }
+ }
+
+ exports.checkDeleteHotel = async (_id)=>{
+    try{
+     let exist = await Hotel.findOne({_id}).lean()
+     return exist;
+    }catch(err){
+        return err;
+    }
+ }
+
+ exports.checkUpdateHotel = async (params) => {
+    try {
+        if (Object.entries(params).length === 0 || params.user) {
             return false;
         } else {
             return true;
