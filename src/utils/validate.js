@@ -112,6 +112,16 @@ exports.findHotel = async (name) => {
     }
 }
 
+exports.findUserHotel = async (userId) => {
+    try {
+        let exist = await User.findOne({ _id: userId }).lean();
+        return exist;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
 exports.checkDeleteHotel = async (_id) => {
     try {
         let exist = await Hotel.findOne({ _id }).lean()
@@ -124,7 +134,20 @@ exports.checkDeleteHotel = async (_id) => {
 
 exports.checkUpdateHotel = async (params) => {
     try {
-        if (Object.entries(params).length === 0 || params.adminHotel || params.timesRequest) {
+        if (Object.entries(params).length === 0 || params.adminHotel || params.image || params.timesRequest) {
+            return false;
+        } else {
+            return true;
+        }
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+exports.checkUpdateHotel_OnlyAdmin = async (params) => {
+    try {
+        if (Object.entries(params).length === 0 || params.image || params.timesRequest) {
             return false;
         } else {
             return true;

@@ -8,7 +8,7 @@ const midAuth = require('../services/auth');
 const connectMultiparty = require('connect-multiparty');
 const upload = connectMultiparty({ uploadDir: './uploads/users' });
 
-//*ADMIN
+//* Admnistrador
 api.get('/test', [midAuth.ensureAuth, midAuth.isAdmin], userController.test);
 
 api.post('/register_OnlyAdmin', [midAuth.ensureAuth, midAuth.isAdmin], userController.register_OnlyAdmin);
@@ -21,12 +21,12 @@ api.post('/searchUser', [midAuth.ensureAuth, midAuth.isAdmin], userController.se
 api.put('/update_OnlyAdmin/:id', [midAuth.ensureAuth, midAuth.isAdmin], userController.update_OnlyAdmin);
 api.delete('/delete_OnlyAdmin/:id', [midAuth.ensureAuth, midAuth.isAdmin], userController.delete_OnlyAdmin);
 
-//*ALL ROLES
+//* Usuarios no registrados
 api.post('/login', userController.login);
 
 api.post('/register', userController.register);
 
-//*CLIENT
+//* Usuarios registrados
 api.post('/uploadImage', [midAuth.ensureAuth, upload], userController.uploadImage);
 
 api.get('/getImage/:fileName', upload, userController.getImageUser);
