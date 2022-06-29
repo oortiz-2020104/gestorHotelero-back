@@ -167,3 +167,12 @@ exports.checkUpdateService = async (params) => {
         return true;
     }
 }
+
+//* Habitaciones ------------------------------------------------------------------------------------
+exports.checkUpdateRoom = async (params) => {
+    if (Object.entries(params).length === 0 || params.hotel) {
+        return false;
+    } else {
+        return true;
+    }
+}
