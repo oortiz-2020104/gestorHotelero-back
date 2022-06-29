@@ -747,49 +747,6 @@
 							"response": []
 						},
 						{
-							"name": "Obtener imagen",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "apikey",
-									"apikey": [
-										{
-											"key": "value",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmJlOTc5MTM2ODU3M2FlOTUzYjIiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjM2ODIyMSwiZXhwIjoxNjU2NDExNDIxfQ.DfpcGr7g4FZQhx475kChrwGr4VzBqzWWXdMITwY_7qo",
-											"type": "string"
-										},
-										{
-											"key": "key",
-											"value": "Authorization",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
-								"url": {
-									"raw": "http://localhost:3200/user/getImage/KwMAgZHvBqJh8dCFUy9qmSE6.jpg",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3200",
-									"path": [
-										"user",
-										"getImage",
-										"KwMAgZHvBqJh8dCFUy9qmSE6.jpg"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Actualizar",
 							"request": {
 								"auth": {
@@ -970,6 +927,47 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Servicios",
+					"item": [
+						{
+							"name": "Obtener servicios",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmQ2Zjc5MTM2ODU3M2FlOTUzYmYiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjUyNjg5MiwiZXhwIjoxNjU2NTcwMDkyfQ.K5vlF1NRRsdmmFSlfGBNUJrezXZ_ZLkp2o8BMS2L3ag",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3200/service/getServices_Clients/62bc7505aa33ee8b85352b29",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"service",
+										"getServices_Clients",
+										"62bc7505aa33ee8b85352b29"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -1029,6 +1027,53 @@
 									"path": [
 										"hotel",
 										"addHotel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Subir imagen",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTI3NzUzLCJleHAiOjE2NTY1NzA5NTN9.gfL9naUJ8UXp-0Df2NYImOVsLkn_GYBay9d05tYx7_c",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/OSEMO/Downloads/304478132.jpg",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/uploadImageHotel/62bbb71193d630ae8953cead",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"uploadImageHotel",
+										"62bbb71193d630ae8953cead"
 									]
 								}
 							},
@@ -1555,6 +1600,49 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Obtener imagen",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmJlOTc5MTM2ODU3M2FlOTUzYjIiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjM2ODIyMSwiZXhwIjoxNjU2NDExNDIxfQ.DfpcGr7g4FZQhx475kChrwGr4VzBqzWWXdMITwY_7qo",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/getImage/KwMAgZHvBqJh8dCFUy9qmSE6.jpg",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"getImage",
+										"KwMAgZHvBqJh8dCFUy9qmSE6.jpg"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -1576,6 +1664,49 @@
 									"path": [
 										"hotel",
 										"getHotels_NoClients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener imagen",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmJlOTc5MTM2ODU3M2FlOTUzYjIiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjM2ODIyMSwiZXhwIjoxNjU2NDExNDIxfQ.DfpcGr7g4FZQhx475kChrwGr4VzBqzWWXdMITwY_7qo",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/getImageHotel/jbBBLS4vCZj22FDgj3C-7niG.jpg",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"getImageHotel",
+										"jbBBLS4vCZj22FDgj3C-7niG.jpg"
 									]
 								}
 							},
