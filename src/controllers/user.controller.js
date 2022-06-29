@@ -11,6 +11,8 @@ exports.test = (req, res) => {
     return res.send({ message: 'Mensaje de prueba desde el controlador de usuarios' });
 };
 
+//* Funciones admistrador ---------------------------------------------------------------------------------------
+
 exports.register_OnlyAdmin = async (req, res) => {
     try {
         const params = req.body;
@@ -161,6 +163,8 @@ exports.delete_OnlyAdmin = async (req, res) => {
     }
 };
 
+//* Funciones usuario no registrado ---------------------------------------------------------------------------------------
+
 exports.login = async (req, res) => {
     try {
         const params = req.body;
@@ -223,6 +227,8 @@ exports.register = async (req, res) => {
         return res.status(500).send({ message: 'Error al registrarse' });
     }
 };
+
+//* Funciones usuario registrado ---------------------------------------------------------------------------------------
 
 exports.myProfile = async (req, res) => {
     try {

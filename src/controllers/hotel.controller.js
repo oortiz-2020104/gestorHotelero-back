@@ -21,6 +21,8 @@ exports.testHotel = (req, res) => {
     }
 } */
 
+//* Funciones administrador de hotel ---------------------------------------------------------------------------------------
+
 exports.addHotel = async (req, res) => {
     try {
         const params = req.body;
@@ -32,8 +34,8 @@ exports.addHotel = async (req, res) => {
         }
         const msg = validateData(data);
         if (!msg) {
-            const checkUser = await findHotel(data.name);
-            if (checkUser) {
+            const checkHotel = await findHotel(data.name);
+            if (checkHotel) {
                 return res.status(400).send({ message: 'Ya existe un hotel con el mismo nombre' });
             } else {
                 const hotel = new Hotel(data);
@@ -52,7 +54,7 @@ exports.addHotel = async (req, res) => {
 exports.getHotels = async (req, res) => {
     try {
         const userId = req.user.sub
-        const hotels = await Hotel.find({ user: userId })
+        const hotels = await Hotel.find({ adminHotel: userId })
 
         if (!hotels) {
             return res.send({ message: 'Hoteles no encontrados' });
@@ -83,7 +85,7 @@ exports.getHotel = async (req, res) => {
         }
     } catch (err) {
         console.log(err);
-        return res.status(500).send({ err, message: 'Error obteniendo el hotel' });
+        return res.status(500).send({ message: 'Error obteniendo el hotel' });
     }
 }
 
@@ -101,11 +103,16 @@ exports.updateHotel = async (req, res) => {
             if (!checkUpdated) {
                 return res.status(400).send({ message: 'Parámetros inválidos' })
             } else {
-                const updateHotel = await Hotel.findOneAndUpdate({ _id: hotelId }, params, { new: true }).lean();
-                if (!updateHotel) {
-                    return res.send({ message: 'No se ha podido actualizar el hotel' })
+                const checkHotel = await findHotel(params.name);
+                if (checkHotel && checkUserHotel.name != params.name) {
+                    return res.status(400).send({ message: 'Ya existe un hotel con el mismo nombre' });
                 } else {
-                    return res.send({ message: 'Hotel actualizado:', updateHotel })
+                    const updateHotel = await Hotel.findOneAndUpdate({ _id: hotelId }, params, { new: true }).lean();
+                    if (!updateHotel) {
+                        return res.send({ message: 'No se ha podido actualizar el hotel' })
+                    } else {
+                        return res.send({ message: 'Hotel actualizado:', updateHotel })
+                    }
                 }
             }
         }
