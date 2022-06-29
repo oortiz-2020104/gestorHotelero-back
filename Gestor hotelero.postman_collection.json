@@ -1,0 +1,1589 @@
+{
+	"info": {
+		"_postman_id": "b6c9a20f-f17e-4c28-9869-c0d22ed39ed2",
+		"name": "Gestor hotelero",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19445860"
+	},
+	"item": [
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "Usuarios",
+					"item": [
+						{
+							"name": "Prueba",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTYzNzAwNTUsImV4cCI6MTY1NjQxMzI1NX0.k71IhAxHnga9_1rzPe9JtU1cNfx3iwu3cuWplqBXnEQ",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3200/user/test",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"test"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registrar solo ADMIN",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTY0Njc5NDUsImV4cCI6MTY1NjUxMTE0NX0.xFXPSDXcw8yWv5e8lNc9Gs19hgfxguo2UEdctQ3rEDQ",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Administrador",
+											"type": "text"
+										},
+										{
+											"key": "surname",
+											"value": "Hotel del Patio",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "adminhoteldelpatio",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "adminhoteldelpatio@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+502 7926 1229",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "adminhoteldelpatio",
+											"type": "text"
+										},
+										{
+											"key": "role",
+											"value": "HOTELADMIN",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/register_OnlyAdmin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"register_OnlyAdmin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener usuario",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTYzNzAwNTUsImV4cCI6MTY1NjQxMzI1NX0.k71IhAxHnga9_1rzPe9JtU1cNfx3iwu3cuWplqBXnEQ",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/getUser/62ba239e7570611e961570a2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"getUser",
+										"62ba239e7570611e961570a2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener usuarios",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTYzNzAwNTUsImV4cCI6MTY1NjQxMzI1NX0.k71IhAxHnga9_1rzPe9JtU1cNfx3iwu3cuWplqBXnEQ",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/getUsers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"getUsers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar solo ADMIN",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTY0Njc5NDUsImV4cCI6MTY1NjUxMTE0NX0.xFXPSDXcw8yWv5e8lNc9Gs19hgfxguo2UEdctQ3rEDQ",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Josue",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "surname",
+											"value": "Noj",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "username",
+											"value": "jnoj",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "email",
+											"value": "jnoj@gmail.com",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "phone",
+											"value": "12341234",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "role",
+											"value": "HOTELADMIN",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/update_OnlyAdmin/62bbb1f8e869d2221d6bde03",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"update_OnlyAdmin",
+										"62bbb1f8e869d2221d6bde03"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar solo ADMIN",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTYzNzAwNTUsImV4cCI6MTY1NjQxMzI1NX0.k71IhAxHnga9_1rzPe9JtU1cNfx3iwu3cuWplqBXnEQ",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/delete_OnlyAdmin/62ba239e7570611e961570a2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"delete_OnlyAdmin",
+										"62ba239e7570611e961570a2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Hoteles",
+					"item": [
+						{
+							"name": "Prueba hotel",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiRW1pbGlvIiwic3VybmFtZSI6ImRlIExlw7NuIiwidXNlcm5hbWUiOiJlZGVsZW9uIiwiZW1haWwiOiJlZGVsZW9uQGdtYWlsLmNvbSIsInBob25lIjoiMTIzNDU2NzkiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NjQ2ODA4NCwiZXhwIjoxNjU2NTExMjg0fQ.pgXeQNGzKfM3S7wYP63fW76j6iw_yQESD2Z3OTXRNfo",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3200/hotel/testHotel",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"testHotel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Agregar Hotel",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTY0NzY1NjQsImV4cCI6MTY1NjUxOTc2NH0.PD1MkVRiq7I0Jq__h5OInbjMpT8HAWqyIU9xOZTvzm4",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "adminHotel",
+											"value": "62bbb1f8e869d2221d6bde03",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Hotel Prueba",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "asd",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "asd",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/addHotel_OnlyAdmin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"addHotel_OnlyAdmin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Hoteles",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTY0NzY1NjQsImV4cCI6MTY1NjUxOTc2NH0.PD1MkVRiq7I0Jq__h5OInbjMpT8HAWqyIU9xOZTvzm4",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/getHotels_OnlyAdmin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"getHotels_OnlyAdmin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Hotel",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTY0NzY1NjQsImV4cCI6MTY1NjUxOTc2NH0.PD1MkVRiq7I0Jq__h5OInbjMpT8HAWqyIU9xOZTvzm4",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/getHotel_OnlyAdmin/62bbb51693d630ae8953ce9f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"getHotel_OnlyAdmin",
+										"62bbb51693d630ae8953ce9f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar Hotel",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTY0NzY1NjQsImV4cCI6MTY1NjUxOTc2NH0.PD1MkVRiq7I0Jq__h5OInbjMpT8HAWqyIU9xOZTvzm4",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "adminHotel",
+											"value": "62ba2d6f791368573ae953bf",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "ola",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "ola",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "ola",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/updateHotel_OnlyAdmin/62bbd69785d65348e1b623af",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"updateHotel_OnlyAdmin",
+										"62bbd69785d65348e1b623af"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Hotel",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTY0NzY1NjQsImV4cCI6MTY1NjUxOTc2NH0.PD1MkVRiq7I0Jq__h5OInbjMpT8HAWqyIU9xOZTvzm4",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/deleteHotel_OnlyAdmin/62bbd69785d65348e1b623af",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"deleteHotel_OnlyAdmin",
+										"62bbd69785d65348e1b623af"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Servicios",
+					"item": [
+						{
+							"name": "Prueba servicio",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMjM5ZTc1NzA2MTFlOTYxNTcwYTIiLCJuYW1lIjoiQURNSU4iLCJzdXJuYW1lIjoiQURNSU4iLCJ1c2VybmFtZSI6IkFETUlOIiwiZW1haWwiOiJBRE1JTiIsInBob25lIjoiQURNSU4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NTY1MTY1NzQsImV4cCI6MTY1NjU1OTc3NH0.rgR0QmFbxb8WgsbtG-EAXryOMX_YZ7-T2GzHnDB3gAo",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3200/service/testServices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"service",
+										"testServices"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CLIENT",
+			"item": [
+				{
+					"name": "Usuarios",
+					"item": [
+						{
+							"name": "Subir imagen",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmQ2Zjc5MTM2ODU3M2FlOTUzYmYiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjM2ODY2MCwiZXhwIjoxNjU2NDExODYwfQ.-feel13UQl1zJ7Q0BTuBYtjkWpamyFkaxe9hoPkWW0E",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/OSEMO/Pictures/0d1939679a3a4377383d5c38f928d5d8.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/uploadImage",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"uploadImage"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mi perfil",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjY5MDkzZDYzMGFlODk1M2NlYTkiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBkZWwgUGF0aW8iLCJ1c2VybmFtZSI6ImFkbWluaG90ZWxkZWxwYXRpbyIsImVtYWlsIjoiYWRtaW5ob3RlbGRlbHBhdGlvQGdtYWlsLmNvbSIsInBob25lIjoiKzUwMiA3OTI2IDEyMjkiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NjQ2OTE1MCwiZXhwIjoxNjU2NTEyMzUwfQ.QzlxrawIpw6bAeNxUkJqliYxciwWh06ylbKVNZ8gXiQ",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/myProfile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"myProfile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener imagen",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmJlOTc5MTM2ODU3M2FlOTUzYjIiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjM2ODIyMSwiZXhwIjoxNjU2NDExNDIxfQ.DfpcGr7g4FZQhx475kChrwGr4VzBqzWWXdMITwY_7qo",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/getImage/KwMAgZHvBqJh8dCFUy9qmSE6.jpg",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"getImage",
+										"KwMAgZHvBqJh8dCFUy9qmSE6.jpg"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiRW1pbGlvIiwic3VybmFtZSI6ImRlIExlw7NuIiwidXNlcm5hbWUiOiJlZGVsZW9uIiwiZW1haWwiOiJlZGVsZW9uQGdtYWlsLmNvbSIsInBob25lIjoiMTIzNDU2NzkiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NjQ2ODc4OSwiZXhwIjoxNjU2NTExOTg5fQ.cLt5RYbL09Gq4iHuDEqQL2fnkpimaXT1PjpsUZw46D8",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Administrador",
+											"type": "text"
+										},
+										{
+											"key": "surname",
+											"value": "Hotel Camino Real",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "admincaminoreal",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "admincaminoreal@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+502 2333 3000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmJlOTc5MTM2ODU3M2FlOTUzYjIiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjM2ODIyMSwiZXhwIjoxNjU2NDExNDIxfQ.DfpcGr7g4FZQhx475kChrwGr4VzBqzWWXdMITwY_7qo",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Hoteles",
+					"item": [
+						{
+							"name": "Obtener Hoteles",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmQ2Zjc5MTM2ODU3M2FlOTUzYmYiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjQ3NjM0NSwiZXhwIjoxNjU2NTE5NTQ1fQ.5iFimHukfiDOWTpPbXiC16pQS3SzOJk2wi2Ajstv4kk",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3200/hotel/getHotels_Clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"getHotels_Clients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Hotel",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmQ2Zjc5MTM2ODU3M2FlOTUzYmYiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjQ3NjM0NSwiZXhwIjoxNjU2NTE5NTQ1fQ.5iFimHukfiDOWTpPbXiC16pQS3SzOJk2wi2Ajstv4kk",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3200/hotel/getHotel_Clients/62bbb51693d630ae8953ce9f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"getHotel_Clients",
+										"62bbb51693d630ae8953ce9f"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "HOTELADMIN",
+			"item": [
+				{
+					"name": "Hoteles",
+					"item": [
+						{
+							"name": "Agregar Hotel",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTIwMzQwLCJleHAiOjE2NTY1NjM1NDB9.qFz_Q3T1PxH-fXRHCKHV5umvPEt_EpjrEUkjtfay9ow",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Camino Real Tikal",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "2ª Calle y 8ª Avenida Esquina, zona 1, Santa Elena, Petén",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+502 2333 3000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/addHotel",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"addHotel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar Hotel",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYzQwNzFkYTZkNjRjNmM0NmIwNWEiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBkZWwgUGF0aW8iLCJ1c2VybmFtZSI6IjMiLCJlbWFpbCI6ImFkbWluaG90ZWxkZWxwYXRpb0BnbWFpbC5jb20iLCJwaG9uZSI6Iis1MDIgNzkyNiAxMjI5Iiwicm9sZSI6IkhPVEVMQURNSU4iLCJpYXQiOjE2NTY0NzY5MTksImV4cCI6MTY1NjUyMDExOX0.laKCM2Y99MHCyjd4QR01wvsXW5rkaJ2nWDMm0mOk5_Q\"",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Westin Camino Real",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "Avenida la Reforma y 14 Calle, Ciudad de Guatemala",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+502 2333 3000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/updateHotel/62bbc5bed54c51543a8e3b43",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"updateHotel",
+										"62bbc5bed54c51543a8e3b43"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Hotel",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NDY5OTk4LCJleHAiOjE2NTY1MTMxOTh9.N4H5pgj_wOWNjYtkfmWitQSEoqOzc3CIUGSadLUNyM4",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/getHotel/62bbb51693d630ae8953ce9f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"getHotel",
+										"62bbb51693d630ae8953ce9f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Hoteles",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NDY5OTk4LCJleHAiOjE2NTY1MTMxOTh9.N4H5pgj_wOWNjYtkfmWitQSEoqOzc3CIUGSadLUNyM4",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/getHotels",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"getHotels"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Hotel",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhNGNiMjY4ZWE0YzczNDdmMTdiMWIiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJlc2luYXkiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjU2MzkxOTQ0LCJleHAiOjE2NTY0MzUxNDR9.310tNt_ApDQeBDVb6aQMF5p3XS9TYKHL8edYiAUwDko",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/hotel/deleteHotel/62ba9135e9ec368ac0ed49a7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"deleteHotel",
+										"62ba9135e9ec368ac0ed49a7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Servicios",
+					"item": [
+						{
+							"name": "Agregar servicio",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTIwMzQwLCJleHAiOjE2NTY1NjM1NDB9.qFz_Q3T1PxH-fXRHCKHV5umvPEt_EpjrEUkjtfay9ow",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "hotel",
+											"value": "62bbb51693d630ae8953ce9f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Servicio ejemplo 5",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "350",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Servicio de ejemplo #5",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/service/addService",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"service",
+										"addService"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener servicio",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTIwMzQwLCJleHAiOjE2NTY1NjM1NDB9.qFz_Q3T1PxH-fXRHCKHV5umvPEt_EpjrEUkjtfay9ow",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/service/getService/62bbb51693d630ae8953ce9f/62bc7505aa33ee8b85352b29",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"service",
+										"getService",
+										"62bbb51693d630ae8953ce9f",
+										"62bc7505aa33ee8b85352b29"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener servicios",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTIwMzQwLCJleHAiOjE2NTY1NjM1NDB9.qFz_Q3T1PxH-fXRHCKHV5umvPEt_EpjrEUkjtfay9ow",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/service/getServices/62bbb51693d630ae8953ce9f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"service",
+										"getServices",
+										"62bbb51693d630ae8953ce9f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar servicio",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTIwNTA1LCJleHAiOjE2NTY1NjM3MDV9.zYa3Kr6nsI0leh8_Vnsk1RJ69R19uE0_aMEUGV_qDwI",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Servicio ejemplo 5",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Servicio de ejemplo #5",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "350",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/service/updateService/62bbb71193d630ae8953cead/62bc7539aa33ee8b85352b31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"service",
+										"updateService",
+										"62bbb71193d630ae8953cead",
+										"62bc7539aa33ee8b85352b31"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar servicio",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTIwNTA1LCJleHAiOjE2NTY1NjM3MDV9.zYa3Kr6nsI0leh8_Vnsk1RJ69R19uE0_aMEUGV_qDwI",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/service/deleteService/62bbb51693d630ae8953ce9f/62bc7517aa33ee8b85352b2c",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"service",
+										"deleteService",
+										"62bbb51693d630ae8953ce9f",
+										"62bc7517aa33ee8b85352b2c"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "GENERAL",
+			"item": [
+				{
+					"name": "Usuarios",
+					"item": [
+						{
+							"name": "Registrar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Osmar",
+											"type": "text"
+										},
+										{
+											"key": "surname",
+											"value": "Ortíz",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "flopez",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "oortiz@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "12345678",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Iniciar sesión",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "admincaminoreal",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "edeleon",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/user/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Hoteles",
+					"item": [
+						{
+							"name": "Obtener Hoteles",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3200/hotel/getHotels_NoClients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"hotel",
+										"getHotels_NoClients"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
