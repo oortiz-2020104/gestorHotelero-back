@@ -158,11 +158,12 @@ exports.checkUpdateHotel_OnlyAdmin = async (params) => {
     }
 }
 
-exports.checkUpdateService = async(service)=>{
-    if( service.sales ||
-        Object.entries(service).length === 0){
-          return false;
-      }else{
-          return true;
-      }
+//* Servicios ---------------------------------------------------------------------------------------
+
+exports.checkUpdateService = async (params) => {
+    if (Object.entries(params).length === 0 || params.hotel) {
+        return false;
+    } else {
+        return true;
+    }
 }

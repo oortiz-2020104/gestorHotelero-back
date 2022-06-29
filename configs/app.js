@@ -9,8 +9,6 @@ const userRoutes = require('../src/routes/user.routes');
 const hotelRoutes = require('../src/routes/hotel.routes');
 const serviceRoutes = require('../src/routes/service.routes');
 
-
-
 app.use(helmet()); //Seguridad de Express
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
