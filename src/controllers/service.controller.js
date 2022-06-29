@@ -9,6 +9,8 @@ exports.testServices = (req, res) => {
     return res.send({ message: 'Función de prueba desde el controlador de servicios' });
 }
 
+//* Funciones administrador de hotel ---------------------------------------------------------------------------------------
+
 exports.addService = async (req, res) => {
     try {
         const params = req.body;
@@ -164,5 +166,22 @@ exports.deleteService = async (req, res) => {
     } catch (err) {
         console.log(err);
         return res.status(500).send({ err, message: 'Error eliminando el servicio' });
+    }
+}
+
+//* Funciones usuario registrado ---------------------------------------------------------------------------------------
+
+exports.getServices_Clients = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel;
+        const services = await Service.find({ hotel: hotelId }).lean();
+        if (!services) {
+            return res.staus(400).send({ message: 'Servicios no encontrados' });
+        } else {
+            return res.send({ messsage: 'Servicios encontrados:', services });
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo los servicios' });
     }
 }

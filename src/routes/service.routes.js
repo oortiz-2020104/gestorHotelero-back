@@ -9,6 +9,7 @@ const serviceController = require('../controllers/service.controller');
 api.get('/testServices', [midAuth.ensureAuth, midAuth.isAdmin], serviceController.testServices);
 
 //* Usuarios registrados
+api.get('/getServices_Clients/:idHotel', midAuth.ensureAuth, serviceController.getServices_Clients);
 
 //* Administrador del hotel
 api.post('/addService', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.addService);

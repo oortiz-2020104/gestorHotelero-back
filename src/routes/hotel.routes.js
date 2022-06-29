@@ -2,8 +2,11 @@
 
 const express = require('express');
 const api = express.Router();
-const midAuth = require('../services/auth');
 const hotelController = require('../controllers/hotel.controller');
+const midAuth = require('../services/auth');
+
+const connectMultiparty = require('connect-multiparty');
+const upload = connectMultiparty({ uploadDir: './uploads/hotels' });
 
 //* Administrador
 api.get('/testHotel', [midAuth.ensureAuth, midAuth.isAdmin], hotelController.testHotel);
@@ -32,5 +35,9 @@ api.get('/getHotels', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelControlle
 
 api.put('/updateHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.updateHotel);
 api.delete('/deleteHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.deleteHotel);
+
+api.post('/uploadImageHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin, upload], hotelController.uploadImageHotel);
+
+api.get('/getImageHotel/:fileName', upload, hotelController.getImageHotel);
 
 module.exports = api;

@@ -1,8 +1,10 @@
 'use strict'
 
-const { validateData, findHotel, checkDeleteHotel, checkUpdateHotel, checkUpdateHotel_OnlyAdmin, findUser, findUserHotel } = require('../utils/validate');
+const { validateData, findHotel, checkDeleteHotel, checkUpdateHotel, checkUpdateHotel_OnlyAdmin, findUser, findUserHotel, validateExtension } = require('../utils/validate');
 
 const Hotel = require('../models/hotel.model');
+const fs = require('fs');
+const path = require('path');
 
 exports.testHotel = (req, res) => {
     return res.send({ message: 'Mensaje desde el controlador de hoteles' });
@@ -238,8 +240,8 @@ exports.getHotel = async (req, res) => {
 
 exports.updateHotel = async (req, res) => {
     try {
-        const hotelId = req.params.id;
         const params = req.body;
+        const hotelId = req.params.id;
         const userId = req.user.sub
 
         const checkUserHotel = await Hotel.findOne({ _id: hotelId })
@@ -289,5 +291,71 @@ exports.deleteHotel = async (req, res) => {
     } catch (err) {
         console.log(err);
         return res.status(500).send({ message: 'Error eliminando el hotel' });
+    }
+}
+
+exports.uploadImageHotel = async (req, res) => {
+    try {
+        const hotelId = req.params.id;
+        const userId = req.user.sub;
+
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId })
+        if (checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes subir una imagen a este hotel' })
+        } else {
+            const alreadyImage = await Hotel.findOne({ _id: hotelId });
+            let pathFile = './uploads/hotels/';
+
+            if (alreadyImage.image) {
+                fs.unlinkSync(pathFile + alreadyImage.image);
+            }
+
+            if (!req.files.image || !req.files.image.type) {
+                return res.status(400).send({ message: 'No se ha enviado una imagen' });
+            } else {
+                //ruta en la que llega la imagen
+                const filePath = req.files.image.path; // \uploads\users\file_name.ext
+
+                //separar en jerarquía la ruta de la imágen (linux o MAC: ('\'))
+                const fileSplit = filePath.split('\\');// fileSplit = ['uploads', 'users', 'file_name.ext']
+                const fileName = fileSplit[2];// fileName = file_name.ext
+
+                const extension = fileName.split('\.'); // extension = ['file_name', 'ext']
+                const fileExt = extension[1]; // fileExt = ext;
+
+                const validExt = await validateExtension(fileExt, filePath);
+
+                if (validExt === false) {
+                    return res.status(400).send({ message: 'Extensión inválida' });
+                } else {
+                    const updateHotel = await Hotel.findOneAndUpdate({ _id: hotelId }, { image: fileName }, { new: true });
+                    if (!updateHotel) {
+                        return res.status(404).send({ message: 'Hotel no encontrado' });
+                    } else {
+                        return res.status(200).send({ message: 'Imagen añadida', updateHotel });
+                    }
+                }
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error subiendo imagen' });
+    }
+}
+
+exports.getImageHotel = async (req, res) => {
+    try {
+        const fileName = req.params.fileName;
+        const pathFile = './uploads/hotels/' + fileName;
+
+        const image = fs.existsSync(pathFile);
+        if (!image) {
+            return res.status(404).send({ message: 'Imagen no encontrada' });
+        } else {
+            return res.sendFile(path.resolve(pathFile));
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo la imagen' });
     }
 }
