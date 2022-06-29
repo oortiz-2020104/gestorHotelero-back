@@ -25,6 +25,8 @@ api.delete('/delete_OnlyAdmin/:id', [midAuth.ensureAuth, midAuth.isAdmin], userC
 api.post('/login', userController.login);
 
 api.post('/register', userController.register);
+
+//*CLIENT
 api.post('/uploadImage', [midAuth.ensureAuth, upload], userController.uploadImage);
 
 api.get('/getImage/:fileName', upload, userController.getImageUser);

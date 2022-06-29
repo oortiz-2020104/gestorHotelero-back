@@ -38,9 +38,7 @@ exports.validateExtension = async (ext, filePath) => {
 
 exports.findUser = async (username) => {
     try {
-        let exist = await User.findOne({
-            username: username
-        }).lean();
+        let exist = await User.findOne({ username: username }).lean();
         return exist;
     } catch (err) {
         console.log(err);
@@ -94,124 +92,39 @@ exports.checkUpdate_OnlyAdmin = async (params) => {
 
 exports.alreadyUser = async (username) => {
     try {
-        let exist = User.findOne({
-            username: username
-        }).lean()
+        let exist = User.findOne({ username: username }).lean()
         return exist;
     } catch (err) {
+        console.log(err)
         return err;
     }
 }
 
-//* Equipos ---------------------------------------------------------------------------------------
+//* Hoteles ---------------------------------------------------------------------------------------
 
-exports.checkUpdateTeams = async (params) => {
+exports.findHotel = async (name) => {
     try {
-        if (Object.entries(params).length === 0 || params.proGoals || params.againstGoals || params.differenceGoals || params.playedMatches) {
-            return false;
-        } else {
-            return true;
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
-}
-
-//* Ligas ------------------------------------------------------------------------------------
-
-exports.findLeague = async (name) => {
-    try {
-        let exist = await League.findOne({
-            name: name
-        });
+        let exist = await Hotel.findOne({ name: name }).lean()
         return exist;
     } catch (err) {
-        console.log(err);
+        console.log(err)
         return err;
     }
 }
 
-exports.checkUpdateLeague = async (params) => {
+exports.checkDeleteHotel = async (_id) => {
     try {
-        if (Object.entries(params).length === 0 || params.teams || params.journeys || params.user) {
-            return false;
-        } else {
-            return true;
-        }
+        let exist = await Hotel.findOne({ _id }).lean()
+        return exist;
     } catch (err) {
-        console.log(err);
+        console.log(err)
         return err;
     }
 }
 
-//* Jornadas ---------------------------------------------------------------------------------------
-
-exports.teamExist = async (team) => {
+exports.checkUpdateHotel = async (params) => {
     try {
-        const teamFound = await Team.findOne({
-            _id: team
-        });
-        if (!teamFound) {
-            return false;
-        } else {
-            return true;
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
-}
-
-exports.checkUpdateJourney = async (params) => {
-    try {
-        if (Object.entries(params).length === 0 || params.match) {
-            return false;
-        } else {
-            return true;
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
-}
-
-exports.checkUpdateMatch = async (params) => {
-    try {
-        if (Object.entries(params).length === 0) {
-            return false;
-        } else {
-            return true;
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
-}
-
-/* Hotel */
-
-exports.findHotel = async (name)=>{
-    try{
-     let exist = await Hotel.findOne({name:name}).lean()
-     return exist;
-    }catch(err){
-        return err;
-    }
- }
-
- exports.checkDeleteHotel = async (_id)=>{
-    try{
-     let exist = await Hotel.findOne({_id}).lean()
-     return exist;
-    }catch(err){
-        return err;
-    }
- }
-
- exports.checkUpdateHotel = async (params) => {
-    try {
-        if (Object.entries(params).length === 0 || params.user) {
+        if (Object.entries(params).length === 0 || params.adminHotel || params.timesRequest) {
             return false;
         } else {
             return true;
