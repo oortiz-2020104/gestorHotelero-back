@@ -968,6 +968,54 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Habitaciones",
+					"item": [
+						{
+							"name": "Obtener habitaciones",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJhMmQ2Zjc5MTM2ODU3M2FlOTUzYmYiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJvb3J0aXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjU2Mzg1NiwiZXhwIjoxNjU2NjA3MDU2fQ.Cw4XYnrR3UZhaicetuK5JCkihhwuuV2gkAY9doxHoW8",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/room/getRooms_Clients/62bbb71193d630ae8953cead",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"room",
+										"getRooms_Clients",
+										"62bbb71193d630ae8953cead"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -1502,6 +1550,256 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Habitaciones",
+					"item": [
+						{
+							"name": "Agregar Habitación",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjY5MDkzZDYzMGFlODk1M2NlYTkiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBkZWwgUGF0aW8iLCJ1c2VybmFtZSI6ImFkbWluaG90ZWxkZWxwYXRpbyIsImVtYWlsIjoiYWRtaW5ob3RlbGRlbHBhdGlvQGdtYWlsLmNvbSIsInBob25lIjoiKzUwMiA3OTI2IDEyMjkiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NjU2MjgyMiwiZXhwIjoxNjU2NjA2MDIyfQ.A5KfOkM1u_c5U_rYB-imfrSTkNia8Zq-RqebLVGIV2c",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "hotel",
+											"value": "62bbb71193d630ae8953cead",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Cuarto 102",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Habitación de prueba",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "1200",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/room/addRoom",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"room",
+										"addRoom"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Habitación",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTYyNTA4LCJleHAiOjE2NTY2MDU3MDh9.WCaKe3ZWL43-JkMpY9j6HLeu4xZVWnFSDQ_azxOyiJ8",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/room/getRoom/62bbb51693d630ae8953ce9f/62bd23fc88d19e297d357a8a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"room",
+										"getRoom",
+										"62bbb51693d630ae8953ce9f",
+										"62bd23fc88d19e297d357a8a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Habitaciones",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTYyNTA4LCJleHAiOjE2NTY2MDU3MDh9.WCaKe3ZWL43-JkMpY9j6HLeu4xZVWnFSDQ_azxOyiJ8",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/room/getRooms/62bbb51693d630ae8953ce9f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"room",
+										"getRooms",
+										"62bbb51693d630ae8953ce9f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar Habitación",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTYyNTA4LCJleHAiOjE2NTY2MDU3MDh9.WCaKe3ZWL43-JkMpY9j6HLeu4xZVWnFSDQ_azxOyiJ8",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Cuarto 101 actualizada",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Habitación de prueba",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "1200",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/room/updateRoom/62bbb51693d630ae8953ce9f/62bd23ef88d19e297d357a86",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"room",
+										"updateRoom",
+										"62bbb51693d630ae8953ce9f",
+										"62bd23ef88d19e297d357a86"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Habitación",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTYyNTA4LCJleHAiOjE2NTY2MDU3MDh9.WCaKe3ZWL43-JkMpY9j6HLeu4xZVWnFSDQ_azxOyiJ8",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/room/deleteRoom/62bbb71193d630ae8953cead/62bd24a088d19e297d357a96",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"room",
+										"deleteRoom",
+										"62bbb71193d630ae8953cead",
+										"62bd24a088d19e297d357a96"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -1576,12 +1874,12 @@
 									"urlencoded": [
 										{
 											"key": "username",
-											"value": "admincaminoreal",
+											"value": "oortiz",
 											"type": "text"
 										},
 										{
 											"key": "password",
-											"value": "edeleon",
+											"value": "oortiz",
 											"type": "text"
 										}
 									]

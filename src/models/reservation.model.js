@@ -5,6 +5,7 @@ const reservationSchema = mongoose.Schema({
     startDate: Date,
     endDate: Date,
     totalPrice: Number,
+    state: String,
     user: {
         type: mongoose.Schema.ObjectId,
         ref: 'user'

@@ -5,12 +5,13 @@ const { validateData, checkUpdateRoom } = require('../utils/validate');
 const Room = require('../models/room.model')
 const Hotel = require('../models/hotel.model')
 
-
-exports.test = (req,res)=>{
-    return res.send({message:'Función de prueba habitaciones'});
+exports.test = (req, res) => {
+    return res.send({ message: 'Función de prueba desde el controlador de cuartos' });
 }
 
-exports.addRoom = async (req,res)=>{
+//* Funciones administrador de hotel ---------------------------------------------------------------------------------------
+
+exports.addRoom = async (req, res) => {
     try {
         const params = req.body;
         const userId = req.user.sub;
@@ -20,29 +21,28 @@ exports.addRoom = async (req,res)=>{
             description: params.description,
             price: params.price,
             available: true,
-            dateAvailable: params.dateAvailable
+            dateAvailable: 'Disponible'
         }
-
         const msg = validateData(data);
-        if(!msg){
-            const checkHotel = await Hotel.findOne({_id: data.hotel});
-            if (!checkHotel) {
-                return res.status(404).send({message:'El hotel no existe'});
+        if (!msg) {
+            const hotelExist = await Hotel.findOne({ _id: data.hotel });
+            if (!hotelExist) {
+                return res.status(404).send({ message: 'El hotel no existe' });
             } else {
-                if (checkHotel.adminHotel != userId) {
-                    return res.status(401).send({message:'No eres el administrador de este hotel'});
+                if (hotelExist.adminHotel != userId) {
+                    return res.status(401).send({ message: 'No eres el administrador de este hotel' });
                 } else {
-                    const checkRoomExist = await Room.findOne({name: data.name, hotel: data.hotel}).lean()
-                    if (checkRoomExist != null) {
-                        return res.status(409).send({message:'Nombre de habitación en uso'});
+                    const checkRoom = await Room.findOne({ name: data.name, hotel: data.hotel }).lean()
+                    if (checkRoom != null) {
+                        return res.status(409).send({ message: 'Ya existe una habitación con el mismo nombre' });
                     } else {
                         const room = new Room(data);
                         await room.save()
-                        return res.send({message: 'Habitación creada satisfactoriamente'});
+                        return res.send({ message: 'Habitación creada satisfactoriamente' });
                     }
                 }
             }
-        }else{
+        } else {
             return res.status(400).send(msg)
         }
     } catch (err) {
@@ -51,10 +51,81 @@ exports.addRoom = async (req,res)=>{
     }
 }
 
+exports.getRoom = async (req, res) => {
+    try {
+        const roomId = req.params.idRoom;
+        const hotelId = req.params.idHotel
+        const userId = req.user.sub
 
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(404).send({ message: 'No puedes ver las habitaciones de este hotel' });
+        } else {
+            const checkRoomHotel = await Room.findOne({ _id: roomId, hotel: hotelId }).populate('hotel').lean();
+            if (checkRoomHotel == null || checkRoomHotel.hotel._id != hotelId) {
+                return res.status(404).send({ message: 'No puedes ver esta habitación' });
+            } else {
+                return res.send({ message: 'Habitación encontrada:', checkRoomHotel });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo el servicio' });
+    }
+}
 
+exports.getRooms = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel;
+        const userId = req.user.sub;
 
-exports.updateRoom = async(req,res)=>{
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId });
+        if (!checkUserHotel) {
+            return res.status(404).send({ message: 'El hotel no existe' });
+        } else {
+            if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+                return res.status(401).send({ message: 'No eres el administrador de este hotel' });
+            } else {
+                const rooms = await Room.find({ hotel: hotelId }).lean().populate('hotel')
+                if (!rooms) {
+                    return res.status(400).send({ message: 'Habitaciones no encontradas' });
+                } else {
+                    return res.send({ message: 'Habitaciones encontradas:', rooms });
+                }
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ err, message: 'Error obteniendo las habitaciones' });
+    }
+}
+
+exports.getRoomsAvailable = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel;
+        const userId = req.user.sub;
+        const hotelExist = await Hotel.findOne({ _id: hotelId });
+        if (!hotelExist) {
+            return res.status(404).send({ message: 'El hotel no existe' });
+        } else {
+            if (hotelExist.adminHotel != userId) {
+                return res.status(401).send({ message: 'No eres el administrador de este hotel' });
+            } else {
+                const rooms = await Room.find({ hotel: hotelId, available: true }).lean()
+                if (!rooms) {
+                    return res.status(400).send({ message: 'Habitaciones no encontradas' });
+                } else {
+                    return res.send({ message: 'Habitaciones encontradas:', rooms });
+                }
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ err, message: 'Error obteniendo las habitaciones' });
+    }
+}
+
+exports.updateRoom = async (req, res) => {
     try {
         const hotelId = req.params.idHotel;
         const roomId = req.params.idRoom;
@@ -63,105 +134,85 @@ exports.updateRoom = async(req,res)=>{
 
         const checkUpdate = await checkUpdateRoom(params);
         if (checkUpdate == false) {
-            return res.status(400).send({message: 'Parámetros inválidos' });
+            return res.status(400).send({ message: 'Parámetros inválidos' });
         } else {
-            const hotelExist = await Hotel.findOne({_id: hotelId});
+            const hotelExist = await Hotel.findOne({ _id: hotelId });
             if (!hotelExist) {
-                return res.status(404).send({message: 'El hotel no existe' });
+                return res.status(404).send({ message: 'El hotel no existe' });
             } else {
                 if (hotelExist.adminHotel != userId) {
-                    return res.status(401).send({message:'No eres el administrador de este hotel'});
+                    return res.status(401).send({ message: 'No puedes actualizar la habitación de este hotel' });
                 } else {
-                    const checkRoomExist = await Room.findOne({_id: roomId, hotel: hotelId}).lean()
-                    if (checkRoomExist == null) {
-                        return res.status(404).send({message:'Habitación no encontrada'});
+                    const checkHotelRoom = await Room.findOne({ _id: roomId, hotel: hotelId }).lean().populate('hotel').lean()
+                    if (checkHotelRoom == null || checkHotelRoom.hotel._id != hotelId) {
+                        return res.status(404).send({ message: 'No puedes actualizar esta habitación' });
                     } else {
-
-                        const checkRoomName = await Room.findOne({name: params.name, hotel: hotelId}).lean()
-                        if (checkRoomName != null) {
-                            return res.status(409).send({message:'Nombre de habitación en uso'});
+                        const checkRoom = await Room.findOne({ name: params.name, hotel: hotelId }).lean()
+                        if (checkRoom != null) {
+                            return res.status(409).send({ message: 'Ya existe una habitación un nombre igual' });
                         } else {
-                            const roomUpdated = await Room.findOneAndUpdate({_id: roomId}, params, {new: true}).lean()
+                            const roomUpdated = await Room.findOneAndUpdate({ _id: roomId }, params, { new: true }).lean()
                             if (!roomUpdated) {
-                                return res.status(400).send({message:'No se pudo actualizar la habitación'});
+                                return res.status(400).send({ message: 'No se ha podido actualizar la habitación' });
                             } else {
-                                return res.send({message: 'Habitación actualizada satisfactoriamente'})
-                            }   
-                        } 
+                                return res.send({ message: 'Habitación actualizada satisfactoriamente', roomUpdated })
+                            }
+                        }
                     }
                 }
             }
         }
     } catch (err) {
         console.log(err);
-        return res.status(500).send({message: 'Error actualizando la habitación' });
+        return res.status(500).send({ message: 'Error actualizando la habitación' });
     }
 }
 
-exports.deleteRoom = async(req,res )=>{
+exports.deleteRoom = async (req, res) => {
     try {
         const hotelId = req.params.idHotel;
         const roomId = req.params.idRoom;
         const userId = req.user.sub;
 
-        const hotelExist = await Hotel.findOne({_id: hotelId});
-        if(!hotelExist){
-            return res.status(404).send({message: 'El hotel no existe' });
-        }else{
+        const hotelExist = await Hotel.findOne({ _id: hotelId });
+        if (!hotelExist) {
+            return res.status(404).send({ message: 'Hotel no encontrado' });
+        } else {
             if (hotelExist.adminHotel != userId) {
-                return res.status(401).send({message:'No eres el administrador de este hotel'});
+                return res.status(401).send({ message: 'No eres el administrador de este hotel' });
             } else {
-                const roomDeleted = await Room.findByIdAndDelete({_id: roomId, hotel: hotelId}).lean();
-                if (!roomDeleted) {
-                    return res.status(404).send({message: 'Habitación no encontrada'});
+                const checkHotelRoom = await Room.findOne({ _id: roomId, hotel: hotelId }).populate('hotel').lean()
+                if (checkHotelRoom == null || checkHotelRoom.hotel._id != hotelId) {
+                    return res.status(400).send({ message: 'No puedes eliminar esta habitación' })
                 } else {
-                    return res.send({message: 'Habitación eliminada', roomDeleted})
+                    const roomDeleted = await Room.findByIdAndDelete({ _id: roomId, hotel: hotelId }).lean();
+                    if (!roomDeleted) {
+                        return res.status(404).send({ message: 'Habitación no encontrada' });
+                    } else {
+                        return res.send({ message: 'Habitación eliminada', roomDeleted })
+                    }
                 }
-
             }
         }
     } catch (err) {
         console.log(err);
-        return res.status(500).send({ err, message: 'Error creando la habitación' });
+        return res.status(500).send({ message: 'Error eliminando la habitación' });
     }
 }
 
+//* Funciones usuario registrado ---------------------------------------------------------------------------------------
 
-exports.getRooms = async(req,res)=>{
+exports.getRooms_Clients = async (req, res) => {
     try {
         const hotelId = req.params.idHotel;
-        const rooms = await Room.find({hotel: hotelId}).lean()
+        const rooms = await Room.find({ hotel: hotelId }).lean()
         if (!rooms) {
-            return res.status(400).send({message: 'Habitaciones no encontradas'});
+            return res.status(400).send({ message: 'Habitaciones no encontradas' });
         } else {
-            return res.send({message: 'Habitaciones encontradas:', rooms});
+            return res.send({ message: 'Habitaciones encontradas:', rooms });
         }
     } catch (error) {
         console.log(err);
-        return res.status(500).send({ err, message: 'Error obteniendo las habitaciones' });
-    }
-}
-
-exports.getRoomsAvailable = async(req,res)=>{
-    try {
-        const hotelId = req.params.idHotel;
-        const userId = req.user.sub;
-        const hotelExist = await Hotel.findOne({_id: hotelId});
-        if (!hotelExist) {
-            return res.status(404).send({message: 'El hotel no existe' });
-        } else {
-            if (hotelExist.adminHotel != userId) {
-                return res.status(401).send({message:'No eres el administrador de este hotel'});
-            } else {
-                const rooms = await Room.find({hotel: hotelId, available: true}).lean()
-                if (!rooms) {
-                    return res.status(400).send({message: 'Habitaciones no encontradas'});
-                } else {
-                    return res.send({message: 'Habitaciones encontradas:', rooms});
-                }
-            }}    
-    } catch (err) {
-        console.log(err);
-        return res.status(500).send({ err, message: 'Error obteniendo las habitaciones' });
+        return res.status(500).send({ message: 'Error obteniendo las habitaciones' });
     }
 }

@@ -169,6 +169,7 @@ exports.checkUpdateService = async (params) => {
 }
 
 //* Habitaciones ------------------------------------------------------------------------------------
+
 exports.checkUpdateRoom = async (params) => {
     if (Object.entries(params).length === 0 || params.hotel) {
         return false;
