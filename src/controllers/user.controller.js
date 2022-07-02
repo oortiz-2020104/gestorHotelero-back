@@ -178,10 +178,13 @@ exports.login = async (req, res) => {
             let checkUser = await findUser(params.username);
             let checkPass = await checkPassword(params.password, checkUser.password);
             delete checkUser.password;
+            delete checkUser.bills;
+            delete checkUser.history;
+            delete checkUser.reservations;
 
             if (checkUser && checkPass) {
                 const token = await jwt.createToken(checkUser);
-                return res.send({ message: 'Iniciando sesión...', token, checkUser });
+                return res.send({ message: 'Sesión iniciada', token, checkUser });
             } else {
                 return res.status(403).send({ message: 'Usuario y/o contraseña incorrectas' });
             }
@@ -217,7 +220,7 @@ exports.register = async (req, res) => {
                 await user.save();
                 return res.send({ message: 'Usuario guardado exitosamente' });
             } else {
-                return res.status(201).send({ message: 'Nombre de usuario ya en uso, utiliza uno diferente' });
+                return res.status(409).send({ message: 'Nombre de usuario ya en uso, utiliza uno diferente' });
             }
         } else {
             return res.status(400).send(msg);
