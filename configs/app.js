@@ -8,7 +8,8 @@ const app = express();
 const userRoutes = require('../src/routes/user.routes');
 const hotelRoutes = require('../src/routes/hotel.routes');
 const serviceRoutes = require('../src/routes/service.routes');
-const roomRoutes = require('../src/routes/room.routes')
+const roomRoutes = require('../src/routes/room.routes');
+const eventRoutes = require('../src/routes/event.routes');
 
 app.use(helmet()); //Seguridad de Express
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -17,9 +18,10 @@ app.use(cors()); //Aceptar solicitudes
 
 //Configuración de rutas
 app.use('/user', userRoutes);
-app.use('/hotel',hotelRoutes);
-app.use('/service',serviceRoutes);
-app.use('/room', roomRoutes)
+app.use('/hotel', hotelRoutes);
+app.use('/service', serviceRoutes);
+app.use('/room', roomRoutes);
+app.use('/event', eventRoutes);
 
 
 module.exports = app;

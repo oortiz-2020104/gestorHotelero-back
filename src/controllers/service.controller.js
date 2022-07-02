@@ -152,7 +152,7 @@ exports.deleteService = async (req, res) => {
             } else {
                 const checkHotelService = await Service.findOne({ _id: serviceId, hotel: hotelId }).populate('hotel').lean()
                 if (checkHotelService == null || checkHotelService.hotel._id != hotelId) {
-                    return res.status(400).send({ message: 'No puedes eliminar esta habitación' })
+                    return res.status(400).send({ message: 'No puedes eliminar este servicio' })
                 } else {
                     const serviceDeleted = await Service.findOneAndDelete({ _id: serviceId, hotel: hotelId }).populate('hotel').lean();
                     if (!serviceDeleted) {

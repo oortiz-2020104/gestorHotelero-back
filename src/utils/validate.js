@@ -168,6 +168,16 @@ exports.checkUpdateService = async (params) => {
     }
 }
 
+//* Eventos ---------------------------------------------------------------------------------------
+
+exports.checkUpdateEvent = async (params) => {
+    if (Object.entries(params).length === 0 || params.hotel) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 //* Habitaciones ------------------------------------------------------------------------------------
 
 exports.checkUpdateRoom = async (params) => {
