@@ -11,9 +11,8 @@ api.get('/testEvent', [midAuth.ensureAuth, midAuth.isAdmin], eventController.tes
 //* Usuarios registrados
 api.get('/getEvents_Clients/:idHotel', midAuth.ensureAuth, eventController.getEvents_Clients);
 
-//Administrador del hotel
+//* Administrador del hotel
 api.post('/addEvent', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.addEvent)
-
 
 api.get('/getEvent/:idHotel/:idEvent', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.getEvent)
 api.get('/getEvents/:idHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.getEvents)
@@ -21,6 +20,5 @@ api.get('/getEvents/:idHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], event
 api.put('/updateEvent/:idHotel/:idEvent', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.updateEvent)
 
 api.delete('/deleteEvent/:idHotel/:idEvent', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.deleteEvent);
-
 
 module.exports = api;

@@ -5,13 +5,11 @@ const { validateData, checkUpdateEvent } = require('../utils/validate');
 const Event = require('../models/event.model');
 const Hotel = require('../models/hotel.model')
 
-
 exports.testEvent = (req, res) => {
     return res.send({ message: 'Función de prueba desde el controlador de Evento' });
 }
 
-
-//Funciones ADMINISTRADOR DEL HOTEL -------------------------------------------------------------------
+//* Funciones administrador de hotel -------------------------------------------------------------------
 
 exports.addEvent = async (req, res) => {
     try {
@@ -39,7 +37,7 @@ exports.addEvent = async (req, res) => {
                     } else {
                         const event = new Event(data);
                         await event.save();
-                        return res.send({ message: 'Servicio creado satisfactoriamente' })
+                        return res.send({ message: 'Evento creado satisfactoriamente' })
                     }
                 }
             }
