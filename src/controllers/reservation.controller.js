@@ -14,6 +14,7 @@ exports.testReservation = (req, res) => {
 
 exports.addReservation = async (req, res) => {
     try {
+        const serviceId = req.body.idServe;
         const params = req.body;
         const userId = req.user.sub;
         const data = {
@@ -49,7 +50,8 @@ exports.addReservation = async (req, res) => {
                             //     return res.status(404).send({ message: 'No puedes agregar una habitación a la reservación' })
                             // } else {
                             const reserve = new Reservation(data);
-                            await reserve.save();
+                            const reserveSaved = await reserve.save();
+                            await Service.findOneAndUpdate({ _id: serviceId }, { $push: { services: reserveSaved } })
                             return res.send({ message: 'Reservacación agregada' });
                         }
                     }
