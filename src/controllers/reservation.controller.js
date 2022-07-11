@@ -32,23 +32,14 @@ exports.addReservation = async (req, res) => {
             if (!hotelExist) {
                 return res.status(400).send({ message: 'Hotel no encontrado' })
             } else {
-                // if (hotelExist.adminHotel === userId) {
-                //     return res.status(401).send({ message: 'Los administradores no pueden hacer reservaciones1' });
-                // } else {
                 const userExist = await User.findOne({ _id: data.user });
                 if (!userExist) {
                     return res.status(400).send({ message: 'Usuario no encontrado' });
                 } else {
-                    // if (userExist.adminHotel == userId) {
-                    //     return res.status(400).send({ message: 'Los administradores no pueden hacer reservaciones2' });
-                    // } else {
                     const roomExist = await Room.findOne({ _id: data.room });
                     if (!roomExist) {
                         return res.status(400).send({ message: 'Habitación No encontrada' });
                     } else {
-                        // if (roomExist.adminHotel == userId) {
-                        //     return res.status(400).send({ message: 'Los administradores no pueden hacer reservaciones3' })
-                        // } else {
                         const reserve = new Reservation(data);
                         const reserSaved = await reserve.save();
                         await Service.findOneAndUpdate({ _id: serviceId }, { $push: { services: reserSaved } })
