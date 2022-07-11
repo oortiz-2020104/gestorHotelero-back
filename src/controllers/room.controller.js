@@ -148,7 +148,8 @@ exports.updateRoom = async (req, res) => {
                         return res.status(404).send({ message: 'No puedes actualizar esta habitación' });
                     } else {
                         const checkRoom = await Room.findOne({ name: params.name, hotel: hotelId }).lean()
-                        if (checkRoom != null) {
+                        console.log(checkRoom)
+                        if (checkRoom != null && checkHotelRoom.name != params.name) {
                             return res.status(409).send({ message: 'Ya existe una habitación un nombre igual' });
                         } else {
                             const roomUpdated = await Room.findOneAndUpdate({ _id: roomId }, params, { new: true }).lean()
