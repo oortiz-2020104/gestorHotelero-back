@@ -12,7 +12,7 @@ api.get('/testServices', [midAuth.ensureAuth, midAuth.isAdmin], serviceControlle
 api.get('/getServices_Clients/:idHotel', midAuth.ensureAuth, serviceController.getServices_Clients);
 
 //* Administrador del hotel
-api.post('/addService', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.addService);
+api.post('/addService/:idU', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.addService);
 
 api.get('/getService/:idHotel/:idService', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.getService);
 api.get('/getServices/:idHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.getServices);

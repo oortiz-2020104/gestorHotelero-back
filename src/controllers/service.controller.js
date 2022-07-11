@@ -4,6 +4,8 @@ const { validateData, checkUpdateService } = require('../utils/validate');
 
 const Service = require('../models/service.model');
 const Hotel = require('../models/hotel.model')
+const Reservation = require('../models/reservation.model')
+
 
 exports.testServices = (req, res) => {
     return res.send({ message: 'Función de prueba desde el controlador de servicios' });
@@ -14,6 +16,7 @@ exports.testServices = (req, res) => {
 exports.addService = async (req, res) => {
     try {
         const params = req.body;
+        const reservationId = req.params.idU;
         const userId = req.user.sub
         const data = {
             hotel: params.hotel,
@@ -35,8 +38,9 @@ exports.addService = async (req, res) => {
                         return res.status(400).send({ message: 'Ya existe un servicio con un nombre igual' });
                     } else {
                         const service = new Service(data);
-                        await service.save();
-                        return res.send({ message: 'Servicio creado satisfactoriamente' });
+                        const serviceSaved = await service.save();
+                        await Reservation.findOneAndUpdate({_id: reservationId}, {$push:{services: serviceSaved._id}})
+                        return res.send({ message: 'Servicio creado satisfactoriamente' })
                     }
                 }
             }

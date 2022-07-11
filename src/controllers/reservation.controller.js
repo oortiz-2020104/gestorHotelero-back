@@ -5,7 +5,8 @@ const { validateData } = require('../utils/validate');
 const Room = require('../models/room.model')
 const User = require('../models/user.model')
 const Hotel = require('../models/hotel.model')
-const Service = require('../models/service.model')
+const Service = require('../models/service.model');
+
 
 exports.testReservation = (req, res) => {
     return res.send({ message: 'Función de prueba desde el controlador de Reservaciones' });
@@ -14,7 +15,7 @@ exports.testReservation = (req, res) => {
 
 exports.addReservation = async (req, res) => {
     try {
-        const serviceId = req.body.idServe;
+   
         const params = req.body;
         const userId = req.user.sub;
         const data = {
@@ -50,9 +51,9 @@ exports.addReservation = async (req, res) => {
                             //     return res.status(404).send({ message: 'No puedes agregar una habitación a la reservación' })
                             // } else {
                             const reserve = new Reservation(data);
-                            const reserveSaved = await reserve.save();
-                            await Service.findOneAndUpdate({ _id: serviceId }, { $push: { services: reserveSaved } })
-                            return res.send({ message: 'Reservacación agregada' });
+                            await reserve.save()
+                            
+                            return res.send({ message: 'Reservacación agregada', });
                         }
                     }
                     // }
@@ -67,3 +68,18 @@ exports.addReservation = async (req, res) => {
         return res.status(500).send({ err, message: 'Error creando la reservacion' })
     }
 }
+
+exports.getReservation = async(req, res)=>{
+    try{
+        const reservationId = req.params.id;
+        const reservation = await Reservation.findOne({_id: reservationId})
+        .lean()
+        .populate('services');
+        if(!reservation) return res.status(404).send({message: 'Product not found'});
+        return res.send({message: 'Reservation found:', reservation});
+    }catch(err){
+        console.log(err);
+        return res.status(500).send({err, message: 'Error getting product'});
+    }
+}
+

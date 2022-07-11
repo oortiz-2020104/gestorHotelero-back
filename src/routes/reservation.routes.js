@@ -10,4 +10,7 @@ api.get('/testReservation', [midAuth.ensureAuth, midAuth.isAdmin], reservationCo
 //* Administrador del hotel
 api.post('/addReservation', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.addReservation);
 
+//*Clientes
+api.get('/getReservation/:id',midAuth.ensureAuth, reservationController.getReservation)
+
 module.exports = api;
