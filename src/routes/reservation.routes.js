@@ -7,7 +7,7 @@ const reservationController = require('../controllers/reservation.controller');
 
 api.get('/testReservation', [midAuth.ensureAuth, midAuth.isAdmin], reservationController.testReservation);
 
-//* Administrador del hotel
-api.post('/addReservation', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.addReservation);
+//* CLIENTE 
+api.post('/addReservation', [midAuth.ensureAuth, midAuth.isClient], reservationController.addReservation);
 
 module.exports = api;

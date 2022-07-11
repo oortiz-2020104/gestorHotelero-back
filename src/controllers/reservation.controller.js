@@ -14,9 +14,9 @@ exports.testReservation = (req, res) => {
 
 exports.addReservation = async (req, res) => {
     try {
+        const userId = req.user.sub;
         const serviceId = req.body.idServe;
         const params = req.body;
-        const userId = req.user.sub;
         const data = {
             startDate: params.startDate,
             endDate: params.endDate,
@@ -30,38 +30,25 @@ exports.addReservation = async (req, res) => {
         if (!msg) {
             const hotelExist = await Hotel.findOne({ _id: data.hotel });
             if (!hotelExist) {
-                return res.status(404).send({ message: 'Hotel no encontrado' });
+                return res.status(400).send({ message: 'Hotel no encontrado' })
             } else {
-                if (hotelExist.adminHotel != userId) {
-                    return res.status(404).send({ message: 'No puedes agregar el hotel a la reservacion' })
+                const userExist = await User.findOne({ _id: data.user });
+                if (!userExist) {
+                    return res.status(400).send({ message: 'Usuario no encontrado' });
                 } else {
-                    const userExist = await User.findOne({ _id: data.user });
-                    if (!userExist) {
-                        return res.status(400).send({ message: 'Usuario no encontrado' })
+                    const roomExist = await Room.findOne({ _id: data.room });
+                    if (!roomExist) {
+                        return res.status(400).send({ message: 'Habitación No encontrada' });
                     } else {
-                        // if (userExist.adminHotel != userId) {
-                        //     return res.status(404).send({ message: 'No puedes agregar al usuario a la reservación' });
-                        // } else {
-                        const roomExist = await Room.findOne({ _id: data.room });
-                        if (!roomExist) {
-                            return res.status(400).send({ message: 'Habitación no encontrada' });
-                        } else {
-                            // if (roomExist.adminHotel != userId) {
-                            //     return res.status(404).send({ message: 'No puedes agregar una habitación a la reservación' })
-                            // } else {
-                            const reserve = new Reservation(data);
-                            const reserveSaved = await reserve.save();
-                            await Service.findOneAndUpdate({ _id: serviceId }, { $push: { services: reserveSaved } })
-                            return res.send({ message: 'Reservacación agregada' });
-                        }
+                        const reserve = new Reservation(data);
+                        const reserSaved = await reserve.save();
+                        await Service.findOneAndUpdate({ _id: serviceId }, { $push: { services: reserSaved } })
+                        return res.send({ message: 'Reservación Agregada' })
                     }
-                    // }
-                    // }
                 }
             }
-        } else {
-            return res.status(400).send(msg)
         }
+
     } catch (err) {
         console.log(err);
         return res.status(500).send({ err, message: 'Error creando la reservacion' })
