@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b6c9a20f-f17e-4c28-9869-c0d22ed39ed2",
+		"_postman_id": "a583af9e-bf0c-4885-aec0-2f3915398ce1",
 		"name": "Gestor hotelero",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19445860"
+		"_exporter_id": "19254100"
 	},
 	"item": [
 		{
@@ -1016,6 +1016,38 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Eventos",
+					"item": [
+						{
+							"name": "Obtener Eventos",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJkM2JlYzkzNTJlNmM0Njk0Mzk5MmUiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJmbG9wZXoiLCJlbWFpbCI6Im9vcnRpekBnbWFpbC5jb20iLCJwaG9uZSI6IjEyMzQ1Njc4Iiwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTY1NjcyNzcxOSwiZXhwIjoxNjU2NzcwOTE5fQ.4TBfRCCaIKLG6Uers3BrVC7gCBrX7KDYSOWDD7vo2c0\"",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3200/event/getEvents_Clients/62be9d9687d5676d139ca3a5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"event",
+										"getEvents_Clients",
+										"62be9d9687d5676d139ca3a5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -1312,7 +1344,7 @@
 									"apikey": [
 										{
 											"key": "value",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJiYjFmOGU4NjlkMjIyMWQ2YmRlMDMiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInN1cm5hbWUiOiJIb3RlbCBDYW1pbm8gUmVhbCIsInVzZXJuYW1lIjoiYWRtaW5jYW1pbm9yZWFsIiwiZW1haWwiOiJhZG1pbmNhbWlub3JlYWxAZ21haWwuY29tIiwicGhvbmUiOiIrNTAyIDIzMzMgMzAwMCIsInJvbGUiOiJIT1RFTEFETUlOIiwiaWF0IjoxNjU2NTIwMzQwLCJleHAiOjE2NTY1NjM1NDB9.qFz_Q3T1PxH-fXRHCKHV5umvPEt_EpjrEUkjtfay9ow",
+											"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJlOWQ1Mjg3ZDU2NzZkMTM5Y2EzYTEiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJob3RlbCIsImVtYWlsIjoib29ydGl6QGdtYWlsLmNvbSIsInBob25lIjoiMTIzNDU2NzgiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NzA1OTcyNCwiZXhwIjoxNjU3MTAyOTI0fQ.F2rMgbIFlg7FlfMZHi7QUWiyUFEJnjmOvZGFJSAoXKQ\"",
 											"type": "string"
 										},
 										{
@@ -1329,12 +1361,12 @@
 									"urlencoded": [
 										{
 											"key": "hotel",
-											"value": "62bbb51693d630ae8953ce9f",
+											"value": "62be9d9687d5676d139ca3a5",
 											"type": "text"
 										},
 										{
 											"key": "name",
-											"value": "Servicio ejemplo 5",
+											"value": "Servicio ejemplo ",
 											"type": "text"
 										},
 										{
@@ -1800,6 +1832,320 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Eventos",
+					"item": [
+						{
+							"name": "Agregar Evento",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJlOWQ1Mjg3ZDU2NzZkMTM5Y2EzYTEiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJob3RlbCIsImVtYWlsIjoib29ydGl6QGdtYWlsLmNvbSIsInBob25lIjoiMTIzNDU2NzgiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NjcyMzY4MywiZXhwIjoxNjU2NzY2ODgzfQ.3AhxDZBmaEYjwzbsYPXs-qb5VviZC1D8Gxzg38O3fzo\"",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Cda",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "guaro",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "alcohol",
+											"type": "text"
+										},
+										{
+											"key": "dateEvent",
+											"value": "2010/05/20",
+											"type": "text"
+										},
+										{
+											"key": "hotel",
+											"value": "62beb288d9a9dde26849544",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/event/addEvent",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"event",
+										"addEvent"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Prueba de Eventos",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Evento",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "62bf999b93faa8c0b",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3200/event/getEvent/62be9d9687d5676d139ca3a5/62bea28aaa8576bf48957e8a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"event",
+										"getEvent",
+										"62be9d9687d5676d139ca3a5",
+										"62bea28aaa8576bf48957e8a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Eventos",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJlOWQ1Mjg3ZDU2NzZkMTM5Y2EzYTEiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJob3RlbCIsImVtYWlsIjoib29ydGl6QGdtYWlsLmNvbSIsInBob25lIjoiMTIzNDU2NzgiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NjcyMzY4MywiZXhwIjoxNjU2NzY2ODgzfQ.3AhxDZBmaEYjwzbsYPXs-qb5VviZC1D8Gxzg38O3fzo\"",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3200/event/getEvents/62be9d9687d5676d139ca3a5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"event",
+										"getEvents",
+										"62be9d9687d5676d139ca3a5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar Evento",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJlOWQ1Mjg3ZDU2NzZkMTM5Y2EzYTEiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJob3RlbCIsImVtYWlsIjoib29ydGl6QGdtYWlsLmNvbSIsInBob25lIjoiMTIzNDU2NzgiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NjcyMzY4MywiZXhwIjoxNjU2NzY2ODgzfQ.3AhxDZBmaEYjwzbsYPXs-qb5VviZC1D8Gxzg38O3fzo\"",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "ss",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "hola",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "si",
+											"type": "text"
+										},
+										{
+											"key": "dateEvent",
+											"value": "2012-05-02",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/event/updateEvent/62beb288d9a9dde26849544e/62bf999b93faa8c0b5216f3a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"event",
+										"updateEvent",
+										"62beb288d9a9dde26849544e",
+										"62bf999b93faa8c0b5216f3a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Evento",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJlOWQ1Mjg3ZDU2NzZkMTM5Y2EzYTEiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJob3RlbCIsImVtYWlsIjoib29ydGl6QGdtYWlsLmNvbSIsInBob25lIjoiMTIzNDU2NzgiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NjcyMzY4MywiZXhwIjoxNjU2NzY2ODgzfQ.3AhxDZBmaEYjwzbsYPXs-qb5VviZC1D8Gxzg38O3fzo\"",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3200/event/deleteEvent/62beb288d9a9dde26849544e/62bfa447d6111d6d43d0c4ef",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"event",
+										"deleteEvent",
+										"62beb288d9a9dde26849544e",
+										"62bfa447d6111d6d43d0c4ef"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Reservaciones",
+					"item": [
+						{
+							"name": "Prueba reservaciones",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJkNDE3MzkyMDBhM2ZkOWMyYzQxNDciLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJqbWlsaWFuIiwiZW1haWwiOiJvb3J0aXpAZ21haWwuY29tIiwicGhvbmUiOiIxMjM0NTY3OCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1NzA1NzkxOSwiZXhwIjoxNjU3MTAxMTE5fQ._HQ2L3CWb2kVx0pQX9oG7yIRVCJJ21rxC0Pfx8zbBrI\"",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3200/reservation/testReservation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"reservation",
+										"testReservation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Agregar Reservación",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MmJlOWQ1Mjg3ZDU2NzZkMTM5Y2EzYTEiLCJuYW1lIjoiT3NtYXIiLCJzdXJuYW1lIjoiT3J0w616IiwidXNlcm5hbWUiOiJob3RlbCIsImVtYWlsIjoib29ydGl6QGdtYWlsLmNvbSIsInBob25lIjoiMTIzNDU2NzgiLCJyb2xlIjoiSE9URUxBRE1JTiIsImlhdCI6MTY1NzA1OTcyNCwiZXhwIjoxNjU3MTAyOTI0fQ.F2rMgbIFlg7FlfMZHi7QUWiyUFEJnjmOvZGFJSAoXKQ\"",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "state",
+											"value": "hola",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "2010-05-30",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "2010-06-02",
+											"type": "text"
+										},
+										{
+											"key": "totalPrice",
+											"value": "58",
+											"type": "text"
+										},
+										{
+											"key": "user",
+											"value": "62bd3bec9352e6c46943992e",
+											"type": "text"
+										},
+										{
+											"key": "room",
+											"value": "62c4b9c2f423591d000e2f49",
+											"type": "text"
+										},
+										{
+											"key": "hotel",
+											"value": "62be9d9687d5676d139ca3a5",
+											"type": "text"
+										},
+										{
+											"key": "services",
+											"value": "62c4b9edf423591d000e2f55",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3200/reservation/addReservation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3200",
+									"path": [
+										"reservation",
+										"addReservation"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -1874,12 +2220,12 @@
 									"urlencoded": [
 										{
 											"key": "username",
-											"value": "oortiz",
+											"value": "hotel",
 											"type": "text"
 										},
 										{
 											"key": "password",
-											"value": "oortiz",
+											"value": "123",
 											"type": "text"
 										}
 									]
