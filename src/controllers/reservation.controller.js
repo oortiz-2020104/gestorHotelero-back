@@ -15,9 +15,8 @@ exports.testReservation = (req, res) => {
 
 exports.addReservation = async (req, res) => {
     try {
-   
+
         const params = req.body;
-        const userId = req.user.sub;
         const data = {
             startDate: params.startDate,
             endDate: params.endDate,
@@ -33,31 +32,18 @@ exports.addReservation = async (req, res) => {
             if (!hotelExist) {
                 return res.status(404).send({ message: 'Hotel no encontrado' });
             } else {
-                if (hotelExist.adminHotel != userId) {
-                    return res.status(404).send({ message: 'No puedes agregar el hotel a la reservacion' })
+                const userExist = await User.findOne({ _id: data.user });
+                if (!userExist) {
+                    return res.status(400).send({ message: 'Usuario no encontrado' })
                 } else {
-                    const userExist = await User.findOne({ _id: data.user });
-                    if (!userExist) {
-                        return res.status(400).send({ message: 'Usuario no encontrado' })
+                    const roomExist = await Room.findOne({ _id: data.room });
+                    if (!roomExist) {
+                        return res.status(400).send({ message: 'Habitación no encontrada' });
                     } else {
-                        // if (userExist.adminHotel != userId) {
-                        //     return res.status(404).send({ message: 'No puedes agregar al usuario a la reservación' });
-                        // } else {
-                        const roomExist = await Room.findOne({ _id: data.room });
-                        if (!roomExist) {
-                            return res.status(400).send({ message: 'Habitación no encontrada' });
-                        } else {
-                            // if (roomExist.adminHotel != userId) {
-                            //     return res.status(404).send({ message: 'No puedes agregar una habitación a la reservación' })
-                            // } else {
-                            const reserve = new Reservation(data);
-                            await reserve.save()
-                            
-                            return res.send({ message: 'Reservacación agregada', });
-                        }
+                        const reserve = new Reservation(data);
+                        await reserve.save()
+                        return res.send({ message: 'Reservacación agregada', });
                     }
-                    // }
-                    // }
                 }
             }
         } else {
@@ -69,17 +55,17 @@ exports.addReservation = async (req, res) => {
     }
 }
 
-exports.getReservation = async(req, res)=>{
-    try{
+exports.getReservation = async (req, res) => {
+    try {
         const reservationId = req.params.id;
-        const reservation = await Reservation.findOne({_id: reservationId})
-        .lean()
-        .populate('services');
-        if(!reservation) return res.status(404).send({message: 'Product not found'});
-        return res.send({message: 'Reservation found:', reservation});
-    }catch(err){
+        const reservation = await Reservation.findOne({ _id: reservationId })
+            .lean()
+            .populate('services');
+        if (!reservation) return res.status(404).send({ message: 'Product not found' });
+        return res.send({ message: 'Reservation found:', reservation });
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({err, message: 'Error getting product'});
+        return res.status(500).send({ err, message: 'Error getting product' });
     }
 }
 
