@@ -33,7 +33,7 @@ exports.addHotel_OnlyAdmin = async (req, res) => {
                 } else {
                     const hotel = new Hotel(data);
                     await hotel.save();
-                    return res.send({ message: 'Hotel creado satisfactoriamente' });
+                    return res.send({ message: 'Hotel creado' });
                 }
             }
         } else {
@@ -115,7 +115,7 @@ exports.deleteHotel_OnlyAdmin = async (req, res) => {
             return res.status(400).send({ message: 'No se ha encontrado el hotel o ya fue eliminado' });
         } else {
             await Hotel.findOneAndDelete({ _id: hotelId });
-            return res.send({ message: 'Hotel eliminado satisfactoriamente', deleteHotel });
+            return res.send({ message: 'Hotel eliminado', deleteHotel });
         }
     } catch (err) {
         console.log(err);
@@ -131,7 +131,7 @@ exports.getHotels_NoClients = async (req, res) => {
         if (!hotels) {
             return res.status(400).send({ message: 'Hoteles no encontrados' });
         } else {
-            return res.send({ messsage: 'Hoteles encontrados:', hotels });
+            return res.send({ messsage: 'Hoteles encontrados', hotels });
         }
     } catch (err) {
         console.log(err);
@@ -147,7 +147,7 @@ exports.getHotels_Clients = async (req, res) => {
         if (!hotels) {
             return res.status(400).send({ message: 'Hoteles no encontrados' });
         } else {
-            return res.send({ messsage: 'Hoteles encontrados:', hotels });
+            return res.send({ messsage: 'Hoteles encontrados', hotels });
         }
     } catch (err) {
         console.log(err);
@@ -162,7 +162,7 @@ exports.getHotel_Clients = async (req, res) => {
         if (!hotel) {
             return res.status(400).send({ message: 'Hotel no encontrado' });
         } else {
-            return res.send({ message: 'Hotel encontrado:', hotel });
+            return res.send({ message: 'Hotel encontrado', hotel });
         }
     } catch (err) {
         console.log(err);
@@ -189,7 +189,7 @@ exports.addHotel = async (req, res) => {
             } else {
                 const hotel = new Hotel(data);
                 await hotel.save();
-                return res.send({ message: 'Hotel creado satisfactoriamente' });
+                return res.send({ message: 'Hotel creado' });
             }
         } else {
             return res.status(400).send(msg);
@@ -208,7 +208,7 @@ exports.getHotels = async (req, res) => {
         if (!hotels) {
             return res.status(400).send({ message: 'Hoteles no encontrados' });
         } else {
-            return res.send({ messsage: 'Hoteles encontrados:', hotels });
+            return res.send({ messsage: 'Hoteles encontrados', hotels });
         }
     } catch (err) {
         console.log(err);
@@ -229,7 +229,7 @@ exports.getHotel = async (req, res) => {
             if (!hotel) {
                 return res.status(400).send({ message: 'Hotel no encontrado' });
             } else {
-                return res.send({ message: 'Hotel encontrado:', hotel });
+                return res.send({ message: 'Hotel encontrado', hotel });
             }
         }
     } catch (err) {
@@ -260,7 +260,7 @@ exports.updateHotel = async (req, res) => {
                     if (!updateHotel) {
                         return res.status(400).send({ message: 'No se ha podido actualizar el hotel' })
                     } else {
-                        return res.send({ message: 'Hotel actualizado:', updateHotel })
+                        return res.send({ message: 'Hotel actualizado', updateHotel })
                     }
                 }
             }
@@ -285,7 +285,7 @@ exports.deleteHotel = async (req, res) => {
                 return res.status(400).send({ message: 'No se ha encontrado el hotel o ya fue eliminado' });
             } else {
                 await Hotel.findOneAndDelete({ _id: hotelId });
-                return res.send({ message: 'Hotel eliminado satisfactoriamente', deleteHotel });
+                return res.send({ message: 'Hotel eliminado', deleteHotel });
             }
         }
     } catch (err) {

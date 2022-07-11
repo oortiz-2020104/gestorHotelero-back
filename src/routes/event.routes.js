@@ -14,8 +14,8 @@ api.get('/getEvents_Clients/:idHotel', midAuth.ensureAuth, eventController.getEv
 //* Administrador del hotel
 api.post('/addEvent', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.addEvent)
 
-api.get('/getEvent/:idHotel/:idEvent', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.getEvent)
 api.get('/getEvents/:idHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.getEvents)
+api.get('/getEvent/:idHotel/:idEvent', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.getEvent)
 
 api.put('/updateEvent/:idHotel/:idEvent', [midAuth.ensureAuth, midAuth.isHotelAdmin], eventController.updateEvent)
 

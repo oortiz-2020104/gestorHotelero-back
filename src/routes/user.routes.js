@@ -13,8 +13,8 @@ api.get('/test', [midAuth.ensureAuth, midAuth.isAdmin], userController.test);
 
 api.post('/register_OnlyAdmin', [midAuth.ensureAuth, midAuth.isAdmin], userController.register_OnlyAdmin);
 
-api.get('/getUser/:id', [midAuth.ensureAuth, midAuth.isAdmin], userController.getUser);
 api.get('/getUsers', [midAuth.ensureAuth, midAuth.isAdmin], userController.getUsers);
+api.get('/getUser/:id', [midAuth.ensureAuth, midAuth.isAdmin], userController.getUser);
 
 api.post('/searchUser', [midAuth.ensureAuth, midAuth.isAdmin], userController.searchUser);
 

@@ -14,8 +14,8 @@ api.get('/getServices_Clients/:idHotel', midAuth.ensureAuth, serviceController.g
 //* Administrador del hotel
 api.post('/addService', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.addService);
 
-api.get('/getService/:idHotel/:idService', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.getService);
 api.get('/getServices/:idHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.getServices);
+api.get('/getService/:idHotel/:idService', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.getService);
 
 api.put('/updateService/:idHotel/:idService', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.updateService);
 

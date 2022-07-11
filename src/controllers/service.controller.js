@@ -36,7 +36,7 @@ exports.addService = async (req, res) => {
                     } else {
                         const service = new Service(data);
                         await service.save();
-                        return res.send({ message: 'Servicio creado satisfactoriamente' });
+                        return res.send({ message: 'Servicio creado' });
                     }
                 }
             }
@@ -63,7 +63,7 @@ exports.getService = async (req, res) => {
             if (checkServiceHotel == null || checkServiceHotel.hotel._id != hotelId) {
                 return res.status(404).send({ message: 'No puedes ver este servicio' });
             } else {
-                return res.send({ message: 'Servicio encontrado:', checkServiceHotel });
+                return res.send({ message: 'Servicio encontrado', checkServiceHotel });
             }
         }
     } catch (err) {
@@ -85,7 +85,7 @@ exports.getServices = async (req, res) => {
             if (!services) {
                 return res.staus(400).send({ message: 'Servicios no encontrados' });
             } else {
-                return res.send({ messsage: 'Servicios encontrados:', services });
+                return res.send({ messsage: 'Servicios encontrados', services });
             }
         }
     } catch (err) {
@@ -117,14 +117,14 @@ exports.updateService = async (req, res) => {
                         return res.status(400).send({ message: 'No puedes actualizar este servicio' })
                     } else {
                         const checkService = await Service.findOne({ name: params.name, hotel: hotelId }).lean()
-                        if (checkService != null) {
+                        if (checkService != null && checkHotelService.name != params.name) {
                             return res.status(400).send({ message: 'Ya existe un servicio con un nombre igual' });
                         } else {
                             const serviceUpdated = await Service.findOneAndUpdate({ _id: serviceId }, params, { new: true }).lean();
                             if (!serviceUpdated) {
                                 return res.staus(400).send({ message: 'No se ha podido actualizar el servicio' });
                             } else {
-                                return res.send({ message: 'Servicio actualizado satisfactoriamente', serviceUpdated });
+                                return res.send({ message: 'Servicio actualizado', serviceUpdated });
                             }
                         }
                     }
@@ -158,7 +158,7 @@ exports.deleteService = async (req, res) => {
                     if (!serviceDeleted) {
                         return res.status(404).send({ message: 'Servicio no encontrado o ya eliminado' });
                     } else {
-                        return res.send({ message: 'Servicio eliminado: ', serviceDeleted });
+                        return res.send({ message: 'Servicio eliminado ', serviceDeleted });
                     }
                 }
             }
@@ -178,7 +178,7 @@ exports.getServices_Clients = async (req, res) => {
         if (!services) {
             return res.staus(400).send({ message: 'Servicios no encontrados' });
         } else {
-            return res.send({ messsage: 'Servicios encontrados:', services });
+            return res.send({ messsage: 'Servicios encontrados', services });
         }
     } catch (err) {
         console.log(err);

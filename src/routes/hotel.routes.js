@@ -30,8 +30,8 @@ api.get('/getHotel_Clients/:id', midAuth.ensureAuth, hotelController.getHotel_Cl
 //* Administrador del hotel
 api.post('/addHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.addHotel);
 
-api.get('/getHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.getHotel);
 api.get('/getHotels', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.getHotels);
+api.get('/getHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.getHotel);
 
 api.put('/updateHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.updateHotel);
 api.delete('/deleteHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.deleteHotel);
