@@ -46,7 +46,10 @@ exports.isHotelAdmin = (req, res, next) => {
         return err;
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
 exports.isClient = (req, res, next) => {
     try {
         const role = req.user.role;
