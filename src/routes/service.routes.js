@@ -23,5 +23,4 @@ api.delete('/deleteService/:idHotel/:idService', [midAuth.ensureAuth, midAuth.is
 
 api.delete('/delete/:idU/:idC', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.deleteServiceAtReservation_OnlyAdmin);
 
-
 module.exports = api;
