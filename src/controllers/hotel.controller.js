@@ -180,6 +180,7 @@ exports.addHotel = async (req, res) => {
             name: params.name,
             address: params.address,
             phone: params.phone,
+            timesRequest: 0,
         }
         const msg = validateData(data);
         if (!msg) {

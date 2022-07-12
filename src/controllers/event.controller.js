@@ -31,7 +31,7 @@ exports.addEvent = async (req, res) => {
                 if (hotelExist.adminHotel != userId) {
                     return res.status(404).send({ message: 'No puedes agregar un evento a un hotel' });
                 } else {
-                    const checkEvent = await Event.findOne({ name: data.name, event: data.event }).lean()
+                    const checkEvent = await Event.findOne({ name: data.name, hotel: data.hotel }).lean()
                     if (checkEvent != null) {
                         return res.status(400).send({ message: 'Ya existe un evento con el mismo nombre' });
                     } else {
@@ -118,7 +118,7 @@ exports.updateEvent = async (req, res) => {
                         return res.status(400).send({ message: 'No puedes actualizar este evento' })
                     } else {
                         const checkEvent = await Event.findOne({ name: params.name, hotel: hotelId }).lean()
-                        if (checkEvent != null) {
+                        if (checkEvent != null && checkHotelEvent.name != params.name) {
                             return res.status(400).send({ message: 'Ya existe un evento con el mimso nombre' });
                         } else {
                             const eventUpdated = await Event.findOneAndUpdate({ _id: eventId }, params, { new: true }).lean();
