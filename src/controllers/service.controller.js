@@ -38,14 +38,8 @@ exports.addService = async (req, res) => {
                         return res.status(400).send({ message: 'Ya existe un servicio con un nombre igual' });
                     } else {
                         const service = new Service(data);
-<<<<<<< HEAD
                         await service.save();
                         return res.send({ message: 'Servicio creado' });
-=======
-                        const serviceSaved = await service.save();
-                        await Reservation.findOneAndUpdate({_id: reservationId}, {$push:{services: serviceSaved._id}})
-                        return res.send({ message: 'Servicio creado satisfactoriamente' })
->>>>>>> develop
                     }
                 }
             }

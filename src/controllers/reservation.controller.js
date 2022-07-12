@@ -15,19 +15,13 @@ exports.testReservation = (req, res) => {
 
 exports.addReservation = async (req, res) => {
     try {
-<<<<<<< HEAD
-        const userId = req.user.sub;
-        const serviceId = req.body.idServe;
-=======
-
->>>>>>> develop
         const params = req.body;
         const data = {
             startDate: params.startDate,
             endDate: params.endDate,
             totalPrice: params.totalPrice,
             state: params.state,
-            user: params.user,
+            user: req.user.sub,
             hotel: params.hotel,
             room: params.room,
         }
@@ -39,18 +33,6 @@ exports.addReservation = async (req, res) => {
             } else {
                 const userExist = await User.findOne({ _id: data.user });
                 if (!userExist) {
-<<<<<<< HEAD
-                    return res.status(400).send({ message: 'Usuario no encontrado' });
-                } else {
-                    const roomExist = await Room.findOne({ _id: data.room });
-                    if (!roomExist) {
-                        return res.status(400).send({ message: 'Habitación No encontrada' });
-                    } else {
-                        const reserve = new Reservation(data);
-                        const reserSaved = await reserve.save();
-                        await Service.findOneAndUpdate({ _id: serviceId }, { $push: { services: reserSaved } })
-                        return res.send({ message: 'Reservación Agregada' })
-=======
                     return res.status(400).send({ message: 'Usuario no encontrado' })
                 } else {
                     const roomExist = await Room.findOne({ _id: data.room });
@@ -60,12 +42,10 @@ exports.addReservation = async (req, res) => {
                         const reserve = new Reservation(data);
                         await reserve.save()
                         return res.send({ message: 'Reservacación agregada', });
->>>>>>> develop
                     }
                 }
             }
         }
-
     } catch (err) {
         console.log(err);
         return res.status(500).send({ err, message: 'Error creando la reservacion' })
@@ -85,4 +65,3 @@ exports.getReservation = async (req, res) => {
         return res.status(500).send({ err, message: 'Error getting product' });
     }
 }
-
