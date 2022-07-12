@@ -188,3 +188,21 @@ exports.getServices_Clients = async (req, res) => {
         return res.status(500).send({ message: 'Error obteniendo los servicios' });
     }
 }
+
+exports.deleteServiceAtReservation_OnlyAdmin = async(req, res)=>{
+    try{
+        const reservationId = req.params.idU;
+        const serviceId = req.params.idC;
+        const removeService = await Reservation.findOneAndUpdate({_id: reservationId}, {$pull:{services: serviceId}});
+        if(!removeService){
+            return res.status(500).send({message: 'error removiendo'});
+        }else{
+            await Service.findOneAndDelete({_id: serviceId});
+        return res.send({message: 'Servicio eliminado'});
+        }
+    }catch(err){
+        console.log(err);
+        return res.status(500).send({message: 'Error eliminando servicio'});
+    }
+}
+
