@@ -32,21 +32,30 @@ exports.addService = async (req, res) => {
                // if (hotelExist.adminHotel != userId) {
                 //    return res.status(404).send({ message: 'No puedes agregar un servicio al hotel' });
                // } else {
-                    const checkService = await Service.findOne({ name: data.name, hotel: data.hotel }).lean()
-                    if (checkService != null) {
-                        return res.status(400).send({ message: 'Ya existe un servicio con un nombre igual' });
-                    } else {
-                        const reservationExist = await Reservation.findOne({ _id: reservationId});
-                        if(!reservationExist){
-                            return res.send({message: 'No existe la reservacion'});
-                        }else{
-                            const service = new Service(data);
-                            const serviceSaved = await service.save();
-                            await Reservation.findOneAndUpdate({_id: reservationId}, {$push:{services: serviceSaved._id}})
-                            return res.send({ message: 'Servicio creado satisfactoriamente' })
+                const reservationExist = await Reservation.findOne({_id: reservationId}).lean();
+                if(!reservationExist){
+                    return res.status(404).send({message: 'Reservacion no encontrada'});
+                }else{
+                    if(reservationExist.hotel != params.hotel){
+                        return res.status(404).send({message: 'Este hotel no contiene este servicio'})
+                    }else{
+                        const checkService = await Service.findOne({ name: data.name, hotel: data.hotel }).lean()
+                        if (checkService != null) {
+                            return res.status(400).send({ message: 'Ya existe un servicio con un nombre igual' });
+                        } else {
+                            const reservationExist = await Reservation.findOne({ _id: reservationId});
+                            if(!reservationExist){
+                                return res.send({message: 'No existe la reservacion'});
+                            }else{
+                                const service = new Service(data);
+                                const serviceSaved = await service.save();
+                                await Reservation.findOneAndUpdate({_id: reservationId}, {$push:{services: serviceSaved._id}})
+                                return res.send({ message: 'Servicio creado satisfactoriamente' })
+                            }
                         }
                     }
-              //  }
+                    
+                }
             }
         } else {
             return res.status(400).send(msg)
