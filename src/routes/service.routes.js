@@ -21,7 +21,7 @@ api.put('/updateService/:idHotel/:idService', [midAuth.ensureAuth, midAuth.isHot
 
 api.delete('/deleteService/:idHotel/:idService', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.deleteService);
 
-api.delete('/delete/:idU/:idC',  serviceController.deleteServiceAtReservation_OnlyAdmin);
+api.delete('/delete/:idU/:idC', [midAuth.ensureAuth, midAuth.isHotelAdmin], serviceController.deleteServiceAtReservation_OnlyAdmin);
 
 
 module.exports = api;
