@@ -12,7 +12,6 @@ exports.testServices = (req, res) => {
 }
 
 //* Funciones administrador de hotel ---------------------------------------------------------------------------------------
-
 exports.addService = async (req, res) => {
     try {
         const params = req.body;
@@ -30,18 +29,24 @@ exports.addService = async (req, res) => {
             if (!hotelExist) {
                 return res.status(404).send({ message: 'Hotel no encontrado' });
             } else {
-                if (hotelExist.adminHotel != userId) {
-                    return res.status(404).send({ message: 'No puedes agregar un servicio al hotel' });
-                } else {
+               // if (hotelExist.adminHotel != userId) {
+                //    return res.status(404).send({ message: 'No puedes agregar un servicio al hotel' });
+               // } else {
                     const checkService = await Service.findOne({ name: data.name, hotel: data.hotel }).lean()
                     if (checkService != null) {
                         return res.status(400).send({ message: 'Ya existe un servicio con un nombre igual' });
                     } else {
-                        const service = new Service(data);
-                        await service.save();
-                        return res.send({ message: 'Servicio creado' });
+                        const reservationExist = await Reservation.findOne({ _id: reservationId});
+                        if(!reservationExist){
+                            return res.send({message: 'No existe la reservacion'});
+                        }else{
+                            const service = new Service(data);
+                            const serviceSaved = await service.save();
+                            await Reservation.findOneAndUpdate({_id: reservationId}, {$push:{services: serviceSaved._id}})
+                            return res.send({ message: 'Servicio creado satisfactoriamente' })
+                        }
                     }
-                }
+              //  }
             }
         } else {
             return res.status(400).send(msg)
