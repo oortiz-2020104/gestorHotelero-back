@@ -8,8 +8,8 @@ const userSchema = mongoose.Schema({
     password: String,
     email: String,
     image: String,
-    role: String,
     phone: String,
+    role: String,
     currentReservation: {
         type: mongoose.Schema.ObjectId,
         ref: 'reservation'
