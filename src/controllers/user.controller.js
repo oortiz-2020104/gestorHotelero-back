@@ -77,6 +77,16 @@ exports.getUsers = async (req, res) => {
     }
 };
 
+exports.getUsersHotelAdmin = async (req, res) => {
+    try {
+        const users = await User.find({ role: 'HOTELADMIN' });
+        return res.send({ message: 'Usuarios encontrados:', users })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).send({ message: 'Error obteniendo los usuarios' });
+    }
+};
+
 exports.searchUser = async (req, res) => {
     try {
         const params = req.body;

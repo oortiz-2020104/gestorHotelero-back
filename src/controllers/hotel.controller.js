@@ -20,6 +20,7 @@ exports.addHotel_OnlyAdmin = async (req, res) => {
             name: params.name,
             address: params.address,
             phone: params.phone,
+            timesRequest: 0,
         }
         const msg = validateData(data);
         if (!msg) {
@@ -47,7 +48,7 @@ exports.addHotel_OnlyAdmin = async (req, res) => {
 
 exports.getHotels_OnlyAdmin = async (req, res) => {
     try {
-        const hotels = await Hotel.find()
+        const hotels = await Hotel.find().populate('adminHotel')
         if (!hotels) {
             return res.status(400).send({ message: 'Hoteles no encontrados' });
         } else {
