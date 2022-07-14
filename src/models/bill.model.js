@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 
 const billSchema = mongoose.Schema({
-    date: Date,
+    date: {type: Date, default: Date.now()},
     total: Number,
     reservation: {
         type: mongoose.Schema.ObjectId,

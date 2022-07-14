@@ -10,7 +10,8 @@ const hotelRoutes = require('../src/routes/hotel.routes');
 const serviceRoutes = require('../src/routes/service.routes');
 const roomRoutes = require('../src/routes/room.routes');
 const eventRoutes = require('../src/routes/event.routes');
-const reservationRoutes = require('../src/routes/reservation.routes')
+const reservationRoutes = require('../src/routes/reservation.routes'); 
+const billRoutes = require('../src/routes/bill.routes');
 
 app.use(helmet()); //Seguridad de Express
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,6 +24,7 @@ app.use('/hotel', hotelRoutes);
 app.use('/service', serviceRoutes);
 app.use('/room', roomRoutes);
 app.use('/event', eventRoutes);
-app.use('/reservation', reservationRoutes)
+app.use('/reservation', reservationRoutes); 
+app.use('/bill', billRoutes);
 
 module.exports = app;
