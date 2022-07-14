@@ -8,6 +8,6 @@ const midAuth = require('../services/auth');
 
 api.get('/testBill', billController.testBill);  
 api.post('/createBill', [midAuth.ensureAuth], billController.createBill);
-
+api.get('/getBills',[midAuth.ensureAuth],billController.searchBills)
 
 module.exports = api;
