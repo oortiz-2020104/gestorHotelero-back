@@ -8,7 +8,11 @@ const reservationController = require('../controllers/reservation.controller');
 api.get('/testReservation', [midAuth.ensureAuth, midAuth.isAdmin], reservationController.testReservation);
 
 //* Usuarios registrados 
-api.post('/addReservation/:idHotel/:idRoom', [midAuth.ensureAuth, midAuth.isClient], reservationController.addReservation);
+api.post('/reserveRoom/:idHotel/:idRoom', [midAuth.ensureAuth, midAuth.isClient], reservationController.reserveRoom);
+
+api.get('/myReserve', [midAuth.ensureAuth, midAuth.isClient], reservationController.myReserve)
+
+api.post('/addServiceMyReserve/:serviceId', [midAuth.ensureAuth, midAuth.isClient], reservationController.addServiceMyReserve)
 
 /* api.get('/getReservation/:id', [midAuth.ensureAuth, midAuth.isClient], reservationController.getReservation);
 api.get('/getReservations/:idHotel', [midAuth.ensureAuth, midAuth.isClient], reservationController.getReservations);

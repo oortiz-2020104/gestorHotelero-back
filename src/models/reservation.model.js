@@ -19,8 +19,8 @@ const reservationSchema = mongoose.Schema({
         ref: 'room'
     },
     services: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'service'
+        quantity: Number,
+        service: { type: mongoose.Schema.ObjectId, ref: 'service' }
     }],
 });
 
