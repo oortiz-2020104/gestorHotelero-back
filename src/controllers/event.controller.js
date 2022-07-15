@@ -35,9 +35,22 @@ exports.addEvent = async (req, res) => {
                     if (checkEvent != null) {
                         return res.status(400).send({ message: 'Ya existe un evento con el mismo nombre' });
                     } else {
-                        const event = new Event(data);
-                        await event.save();
-                        return res.send({ message: 'Evento creado satisfactoriamente' })
+                        let today = new Date().toISOString().split("T")[0]
+                        today = new Date(today)
+                        let date = new Date(data.dateEvent)
+
+                        if (date == 'Invalid Date') {
+                            return res.status(400).send({ message: 'La fecha no es válida' })
+                        } else {
+                            let difference = date.getTime() - today.getTime();
+                            if (difference < 0) {
+                                return res.status(400).send({ message: 'Ingresa una fecha superior' })
+                            } else {
+                                const event = new Event(data);
+                                await event.save();
+                                return res.send({ message: 'Evento creado satisfactoriamente' })
+                            }
+                        }
                     }
                 }
             }
@@ -46,7 +59,7 @@ exports.addEvent = async (req, res) => {
         }
     } catch (err) {
         console.log(err);
-        return res.status(500).send({ err, message: 'Error creando el evento' });
+        return res.status(500).send({ message: 'Error creando el evento' });
     }
 }
 
@@ -64,6 +77,7 @@ exports.getEvent = async (req, res) => {
             if (checkEventHotel == null || checkEventHotel.hotel._id != hotelId) {
                 return res.status(404), send({ message: 'No puedes ver este evento' })
             } else {
+                checkEventHotel.dateEvent = new Date(checkEventHotel.dateEvent).toISOString().split("T")[0];
                 return res.send({ message: 'Evento encontrado', checkEventHotel })
             }
         }
@@ -86,7 +100,10 @@ exports.getEvents = async (req, res) => {
             if (!events) {
                 return res.status(400).send({ message: 'Eventos no encontrados' });
             } else {
-                return res.send({ message: 'Eventos encontrados:', events })
+                for (let i = 0; i < events.length; i++) {
+                    events[i].dateEvent = new Date(events[i].dateEvent).toISOString().split("T")[0];
+                }
+                return res.send({ message: 'Eventos encontrados', events })
             }
         }
     } catch (err) {
@@ -121,11 +138,24 @@ exports.updateEvent = async (req, res) => {
                         if (checkEvent != null && checkHotelEvent.name != params.name) {
                             return res.status(400).send({ message: 'Ya existe un evento con el mimso nombre' });
                         } else {
-                            const eventUpdated = await Event.findOneAndUpdate({ _id: eventId }, params, { new: true }).lean();
-                            if (!eventUpdated) {
-                                return res.status(400).send({ message: 'No se ha podido actualizar este evento' });
+                            let today = new Date().toISOString().split("T")[0]
+                            today = new Date(today)
+                            let date = new Date(params.dateEvent)
+
+                            if (date == 'Invalid Date') {
+                                return res.status(400).send({ message: 'La fecha no es válida' })
                             } else {
-                                return res.send({ message: 'Evento actualizado satisfactoriamente', eventUpdated })
+                                let difference = date.getTime() - today.getTime();
+                                if (difference < 0) {
+                                    return res.status(400).send({ message: 'Ingresa una fecha superior' })
+                                } else {
+                                    const eventUpdated = await Event.findOneAndUpdate({ _id: eventId }, params, { new: true }).lean();
+                                    if (!eventUpdated) {
+                                        return res.status(400).send({ message: 'No se ha podido actualizar este evento' });
+                                    } else {
+                                        return res.send({ message: 'Evento actualizado satisfactoriamente', eventUpdated })
+                                    }
+                                }
                             }
                         }
                     }

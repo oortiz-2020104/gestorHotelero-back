@@ -168,7 +168,7 @@ exports.updateRoom = async (req, res) => {
                 if (hotelExist.adminHotel != userId) {
                     return res.status(401).send({ message: 'No puedes actualizar la habitación de este hotel' });
                 } else {
-                    const checkHotelRoom = await Room.findOne({ _id: roomId, hotel: hotelId }).lean().populate('hotel').lean()
+                    const checkHotelRoom = await Room.findOne({ _id: roomId, hotel: hotelId }).lean().populate('hotel')
                     if (checkHotelRoom == null || checkHotelRoom.hotel._id != hotelId) {
                         return res.status(404).send({ message: 'No puedes actualizar esta habitación' });
                     } else {

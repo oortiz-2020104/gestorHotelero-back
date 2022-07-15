@@ -10,7 +10,11 @@ const roomSchema = mongoose.Schema({
     description: String,
     price: Number,
     available: Boolean,
-    dateAvailable: String
+    dateAvailable: String,
+    currentUser: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user'
+    },
 })
 
 module.exports = mongoose.model('room', roomSchema);

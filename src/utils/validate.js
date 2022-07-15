@@ -181,7 +181,7 @@ exports.checkUpdateEvent = async (params) => {
 //* Habitaciones ------------------------------------------------------------------------------------
 
 exports.checkUpdateRoom = async (params) => {
-    if (Object.entries(params).length === 0 || params.hotel) {
+    if (Object.entries(params).length === 0 || params.hotel || params.currentUser) {
         return false;
     } else {
         return true;

@@ -1,58 +1,94 @@
 'use strict'
 
-const Reservation = require('../models/reservation.model');
-const { validateData, checkUpdateReserve } = require('../utils/validate');
-const Room = require('../models/room.model')
+const { validateData } = require('../utils/validate');
+
 const User = require('../models/user.model')
 const Hotel = require('../models/hotel.model')
-const Service = require('../models/service.model');
-
+const Room = require('../models/room.model')
+const Reservation = require('../models/reservation.model');
 
 exports.testReservation = (req, res) => {
-    return res.send({ message: 'Función de prueba desde el controlador de Reservaciones' });
+    return res.send({ message: 'Función de prueba desde el controlador de reservaciones' });
 }
-
 
 exports.addReservation = async (req, res) => {
     try {
-        const userId = req.user.sub;
-        const serviceId = req.body.idServe;
+        const userId = req.user.sub
+        const hotelId = req.params.idHotel
+        const roomId = req.params.idRoom
         const params = req.body;
         const data = {
             startDate: params.startDate,
             endDate: params.endDate,
-            totalPrice: params.totalPrice,
-            state: params.state,
-            user: params.user,
-            hotel: params.hotel,
-            room: params.room,
         }
+
         const msg = validateData(data);
         if (!msg) {
-            const hotelExist = await Hotel.findOne({ _id: data.hotel });
-            if (!hotelExist) {
-                return res.status(400).send({ message: 'Hotel no encontrado' })
+            const userExist = await User.findOne({ _id: userId });
+            if (!userExist) {
+                return res.status(400).send({ message: 'Usuario no encontrado' });
             } else {
-                const userExist = await User.findOne({ _id: data.user });
-                if (!userExist) {
-                    return res.status(400).send({ message: 'Usuario no encontrado' });
+                if (userExist.currentReservation) {
+                    return res.status(400).send({ message: 'Ya tienes una reservación actualmente' });
                 } else {
-                    const roomExist = await Room.findOne({ _id: data.room });
-                    if (!roomExist) {
-                        return res.status(400).send({ message: 'Habitación No encontrada' });
+                    const hotelExist = await Hotel.findOne({ _id: hotelId });
+                    if (!hotelExist) {
+                        return res.status(400).send({ message: 'Hotel no encontrado' })
                     } else {
-                        const reserve = new Reservation(data);
-                        const reserSaved = await reserve.save();
-                        await Service.findOneAndUpdate({ _id: serviceId }, { $push: { services: reserSaved } })
-                        return res.send({ message: 'Reservación Agregada' })
+                        const checkHotelRoom = await Room.findOne({ _id: roomId, hotel: hotelId }).populate('hotel').lean()
+                        if (checkHotelRoom == null) {
+                            return res.status(400).send({ message: 'Esta habitación no pertenece al hotel' })
+                        } else {
+                            if (checkHotelRoom.available == false) {
+                                return res.status(400).send({ message: `Esta habitación esta reservada hasta el ${checkHotelRoom.dateAvailable}` })
+                            } else {
+                                let date1 = new Date(data.startDate)
+                                let date2 = new Date(data.endDate)
+                                if (date1 == 'Invalid Date' || date2 == 'Invalid Date') {
+                                    return res.status(400).send({ message: 'Las fechas no son válidas' })
+                                } else {
+                                    let today = new Date().toISOString().split("T")[0]
+                                    today = new Date(today)
+                                    let differenceToday = date1.getTime() - today.getTime()
+                                    if (differenceToday < 0) {
+                                        return res.status(400).send({ message: 'Ingresa una fecha de inicio superior' })
+                                    } else {
+                                        let difference = date2.getTime() - date1.getTime();
+                                        if (difference < 0) {
+                                            return res.status(400).send({ message: 'Ingresa una fecha de salida superior a la de inicio' })
+                                        } else {
+                                            if (difference == 0) {
+                                                return res.status(400).send({ message: 'No puedes establecer las mismas fechas' })
+                                            } else {
+                                                let totalDays = Math.ceil(difference / (1000 * 3600 * 24));
+                                                data.totalPrice = checkHotelRoom.price * totalDays
+                                                data.state = 'En curso'
+                                                data.user = req.user.sub
+                                                data.hotel = hotelId
+                                                data.room = roomId
+
+                                                const reservation = new Reservation(data)
+                                                await reservation.save();
+
+                                                await Room.findOneAndUpdate({ _id: roomId, hotel: hotelId }, { available: false, dateAvailable: date2.toISOString().split("T")[0], currentUser: userExist._id }, { new: true }).lean()
+                                                await User.findOneAndUpdate({ _id: req.user.sub }, { currentReservation: reservation._id, $push: { reservations: reservation._id, history: hotelId } }, { new: true }).lean();
+
+                                                return res.send({ message: 'Habitación reservada, ya puedes ir a tu reservación', reservation })
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
+        } else {
+            return res.status(400).send(msg);
         }
-
     } catch (err) {
         console.log(err);
-        return res.status(500).send({ err, message: 'Error creando la reservacion' })
+        return res.status(500).send({ message: 'Error creando la reservacion' })
     }
 }
 
@@ -80,7 +116,6 @@ exports.deleteReservation = async (req, res) => {
     } catch (err) {
         console.log(err)
         return res.status(500).send({ err, message: 'Error' });
-
     }
 }
 
