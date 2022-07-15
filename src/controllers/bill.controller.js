@@ -3,7 +3,7 @@
 const { validateData} = require('../utils/validate'); 
 const Bill = require('../models/bill.model'); 
 const Reservation = require('../models/reservation.model'); 
-
+const mongoose = require('mongoose');
 
 
 exports.testBill = (req, res) => {
@@ -15,7 +15,6 @@ exports.createBill = async (req, res)=>{
     try {
         const params = req.body; 
         const data = { 
-            total: params.total, 
             reservation: params.Reservation
         } 
         const msg = validateData(data); 
@@ -24,6 +23,7 @@ exports.createBill = async (req, res)=>{
             if (!findReservation) {
                 return res.status(404).send({ message: 'Reservación no encontrada' }); 
             } else {
+                data.total = findReservation.totalPrice;
                 const bill = new Bill(data); 
                 const billSaved = await bill.save();  
                 return res.send({ message: 'This is your bill, Thanks for stay with us', billSaved, findReservation});
@@ -42,10 +42,16 @@ exports.createBill = async (req, res)=>{
 
 exports.searchBills = async(req, res) =>{ 
     try {
-        const userId = req.params.id;
-        let searchBill = await Bill.find({ user: userId }).lean();
-        if (searchBill.length === 0) return res.send({ message: 'there is not any bill to show'});
-         else return res.send({ searchBill });
+        const userId = req.user.sub
+        const findReservation = await Reservation.find({user: userId}).lean()
+        const findBill = await Bill.find({reservation: findReservation}).populate('reservation').lean()
+        console.log(findReservation);
+        if (findBill.length === 0){
+            return res.send({ message: 'there is not any bill to show'});
+        } else { 
+            return res.send({ findBill });
+        }
+         
     } catch (error) {
         console.log(error) 
         return error;
