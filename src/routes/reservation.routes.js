@@ -12,13 +12,15 @@ api.post('/reserveRoom/:idHotel/:idRoom', [midAuth.ensureAuth, midAuth.isClient]
 
 api.get('/myReserve', [midAuth.ensureAuth, midAuth.isClient], reservationController.myReserve)
 
-api.post('/addServiceMyReserve/:serviceId', [midAuth.ensureAuth, midAuth.isClient], reservationController.addServiceMyReserve)
-
-/* api.get('/getReservation/:id', [midAuth.ensureAuth, midAuth.isClient], reservationController.getReservation);
-api.get('/getReservations/:idHotel', [midAuth.ensureAuth, midAuth.isClient], reservationController.getReservations);
-
-api.delete('/deleteReservation/:idHotel/:idReservation', [midAuth.ensureAuth, midAuth.isClient], reservationController.deleteReservation); */
+api.post('/addServiceMyReserve/:idService', [midAuth.ensureAuth, midAuth.isClient], reservationController.addServiceMyReserve)
 
 //* Administrador del hotel
+api.get('/getReservations/:idHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.getReservations);
+api.get('/getReservations/:idHotel/:idReservation', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.getReservation);
+api.get('/getServicesReservation/:idHotel/:idReservation', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.getServicesReservation);
+
+api.delete('/deleteServiceReservation/:idHotel/:idReservation/:idService', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.deleteServiceReservation);
+api.delete('/cancelReservation/:idHotel/:idReservation', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.cancelReservation);
+
 
 module.exports = api;

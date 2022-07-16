@@ -21,7 +21,7 @@ const reservationSchema = mongoose.Schema({
     services: [{
         quantity: Number,
         service: { type: mongoose.Schema.ObjectId, ref: 'service' }
-    }],
+    }]
 });
 
 module.exports = mongoose.model('reservation', reservationSchema)

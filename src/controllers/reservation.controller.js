@@ -124,7 +124,7 @@ exports.addServiceMyReserve = async (req, res) => {
         const params = req.body
         const userId = req.user.sub
         const data = {
-            service: req.params.serviceId,
+            service: req.params.idService,
             quantity: params.quantity,
         }
 
@@ -166,48 +166,144 @@ exports.addServiceMyReserve = async (req, res) => {
 exports.getReservations = async (req, res) => {
     try {
         const hotelId = req.params.idHotel;
-        const userId = req.params.sub;
+        const userId = req.user.sub;
 
-        const checkHotelReservation = await Hotel.findOne({ _id: hotelId });
-        if (!checkHotelReservation) {
-            return res.status(404).send({ message: 'El hotel no existe' });
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        console.log(checkUserHotel);
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
         } else {
-            const reservations = await Reservation.find({ hotel: hotelId }).populate('hotel').lean();
+            const reservations = await Reservation.find({ hotel: hotelId }).populate('hotel').populate('room').populate('services.service').lean();
             if (!reservations) {
-                return res.status(400).send({ message: 'Habitaciones no encontradas' });
+                return res.staus(400).send({ message: 'No se encontraron reservaciones' });
             } else {
-                return res.send({ message: 'Habitaciones encontradas', reservations })
+                return res.send({ messsage: 'Reservaciones encontradas', reservations });
             }
         }
     } catch (err) {
         console.log(err);
-        return res.status(500).send({ message: 'Error obteniendo las reservaciones' })
+        return res.status(500).send({ message: 'Error obteniendo las reservaciones' });
     }
 }
 
-exports.deleteReservation = async (req, res) => {
+exports.getReservation = async (req, res) => {
     try {
-        const hotelId = req.params.idHotel;
+        const hotelId = req.params.idHotel
         const reservationId = req.params.idReservation;
+        const userId = req.user.sub
 
-        const hotelExist = await Hotel.findOne({ _id: hotelId });
-        if (!hotelExist) {
-            return res.status(400).send({ message: 'Hotel no encontrado' });
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
         } else {
-            const checkHotelReservation = await Reservation.findOne({ _id: reservationId, hotel: hotelId }).populate('hotel').lean();
-            if (checkHotelReservation == null || checkHotelReservation.hotel._id != hotelId) {
-                return res.status(400).send({ message: 'No puedes eliminar esta reservación' })
+            const checkReservationHotel = await Reservation.findOne({ _id: reservationId, hotel: hotelId }).populate('hotel').populate('room').populate('services.service').lean();
+            if (checkReservationHotel == null || checkReservationHotel.hotel._id != hotelId) {
+                return res.status(400).send({ message: 'No puedes ver esta reservación' });
             } else {
-                const reservationDeleted = await Reservation.findOneAndDelete({ _i: reservationId, hotel: hotelId }).populate('hotel').lean()
-                if (!reservationDeleted) {
-                    return res.status(400).send({ message: 'Reservación no encontrada o ya eliminada' })
+                return res.send({ message: 'Reservación encontrada', checkReservationHotel });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo la reservación' });
+    }
+}
+
+exports.getServicesReservation = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel
+        const reservationId = req.params.idReservation;
+        const userId = req.user.sub
+
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
+        } else {
+            const checkReservationHotel = await Reservation.findOne({ _id: reservationId, hotel: hotelId }).populate('hotel').populate('room').populate('services.service').lean();
+            if (checkReservationHotel == null || checkReservationHotel.hotel._id != hotelId) {
+                return res.status(400).send({ message: 'No puedes ver esta reservación' });
+            } else {
+                return res.send({ message: 'Reservación encontrada', services: checkReservationHotel.services });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo las reservaciones' });
+    }
+}
+
+exports.deleteServiceReservation = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel
+        const reservationId = req.params.idReservation;
+        const serviceId = req.params.idService
+        const userId = req.user.sub
+
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
+        } else {
+            const checkReservationHotel = await Reservation.findOne({ _id: reservationId, hotel: hotelId }).populate('hotel').populate('room').populate('services.service').lean();
+            if (checkReservationHotel == null || checkReservationHotel.hotel._id != hotelId) {
+                return res.status(400).send({ message: 'No puedes ver esta reservación' });
+            } else {
+                const reservation = await Reservation.findOne({ _id: reservationId }).populate('services.service')
+                const service = await reservation.services.id(serviceId)
+                if (!service || service == null) {
+                    return res.status(400).send({ message: 'No puedes eliminar este servicio' });
                 } else {
-                    return res.send({ message: 'Reservación eliminada correctamente', reservationDeleted })
+                    const serviceTotal = service.service.price * service.quantity
+                    const newTotal = checkReservationHotel.totalPrice - serviceTotal
+                    await Reservation.findOneAndUpdate({ _id: reservationId }, { totalPrice: newTotal }, { new: true }).lean();
+
+                    await reservation.services.pull(serviceId);
+                    await reservation.save();
+
+                    return res.send({ message: 'Servicio eliminado' });
                 }
             }
         }
     } catch (err) {
-        console.log(err)
-        return res.status(500).send({ err, message: 'Error' });
+        console.log(err);
+        return res.status(500).send({ message: 'Error eliminando el servicio de la reservación' });
+    }
+}
+
+exports.cancelReservation = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel
+        const reservationId = req.params.idReservation;
+        const userId = req.user.sub
+
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
+        } else {
+            const checkReservationHotel = await Reservation.findOne({ _id: reservationId, hotel: hotelId }).populate('hotel').populate('room').populate('services.service').lean();
+            if (checkReservationHotel == null || checkReservationHotel.hotel._id != hotelId) {
+                return res.status(400).send({ message: 'No puedes ver esta reservación' });
+            } else {
+                if (checkReservationHotel.state == 'Cancelada') {
+                    return res.status(400).send({ message: 'Esta reservación ya fue cancelada' });
+                } else {
+                    if (checkReservationHotel.state == 'Facturada') {
+                        return res.status(400).send({ message: 'Esta reservación ya fue facturada' });
+                    } else {
+                        if (checkReservationHotel.state == 'Cancelada y facturada') {
+                            return res.status(400).send({ message: 'Esta reservación ya fue facturada' });
+                        } else {
+                            await User.findOneAndUpdate({ _id: checkReservationHotel.user }, { $unset: { currentReservation: 1 } }, { new: true }).lean();
+                            await Room.findOneAndUpdate({ _id: checkReservationHotel.room._id }, { available: true, dateAvailable: 'Disponible', $unset: { currentUser: 1 } }, { new: true }).lean();
+                            await Reservation.findOneAndUpdate({ _id: reservationId }, { state: 'Cancelada' }, { new: true }).lean()
+        
+                            return res.send({ message: 'Reservación cancelada' });
+                        }
+                    }
+                }
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error cancelando la reservación' });
     }
 }

@@ -15,7 +15,6 @@ exports.testServices = (req, res) => {
 exports.addService = async (req, res) => {
     try {
         const params = req.body;
-        const reservationId = req.params.idU;
         const userId = req.user.sub
         const data = {
             hotel: params.hotel,
@@ -30,25 +29,15 @@ exports.addService = async (req, res) => {
                 return res.status(404).send({ message: 'Hotel no encontrado' });
             } else {
                 if (hotelExist.adminHotel != userId) {
-                    return res.status(404).send({ message: 'No puedes agregar un servicio al hotel' });
+                    return res.status(404).send({ message: 'No eres el administrador de este hotel' });
                 } else {
-                    const reservationExist = await Reservation.findOne({ _id: reservationId }).lean();
-                    if (!reservationExist) {
-                        return res.status(404).send({ message: 'Reservacion no encontrada' });
+                    const checkService = await Service.findOne({ name: data.name, hotel: data.hotel }).lean()
+                    if (checkService != null) {
+                        return res.status(400).send({ message: 'Ya existe un servicio con un nombre igual' });
                     } else {
-                        if (reservationExist.hotel != params.hotel) {
-                            return res.status(404).send({ message: 'Este hotel no contiene este servicio' })
-                        } else {
-                            const checkService = await Service.findOne({ name: data.name, hotel: data.hotel }).lean()
-                            if (checkService != null) {
-                                return res.status(400).send({ message: 'Ya existe un servicio con un nombre igual' });
-                            } else {
-                                const service = new Service(data);
-                                await service.save();
-                                return res.send({ message: 'Servicio creado satisfactoriamente' })
-                            }
-                        }
-
+                        const service = new Service(data);
+                        await service.save();
+                        return res.send({ message: 'Servicio creado satisfactoriamente' })
                     }
                 }
             }
