@@ -5,6 +5,7 @@ const api = express.Router();
 const midAuth = require('../services/auth');
 const reservationController = require('../controllers/reservation.controller');
 
+//* Administrador 
 api.get('/testReservation', [midAuth.ensureAuth, midAuth.isAdmin], reservationController.testReservation);
 
 //* Usuarios registrados 
@@ -21,6 +22,5 @@ api.get('/getServicesReservation/:idHotel/:idReservation', [midAuth.ensureAuth, 
 
 api.delete('/deleteServiceReservation/:idHotel/:idReservation/:idService', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.deleteServiceReservation);
 api.delete('/cancelReservation/:idHotel/:idReservation', [midAuth.ensureAuth, midAuth.isHotelAdmin], reservationController.cancelReservation);
-
 
 module.exports = api;

@@ -1,13 +1,22 @@
-'use strict' 
-
+'use strict'
 
 const express = require('express');
-const billController = require('../controllers/bill.controller');
 const api = express.Router();
-const midAuth = require('../services/auth'); 
+const midAuth = require('../services/auth');
+const billController = require('../controllers/bill.controller');
 
-api.get('/testBill', billController.testBill);  
-api.post('/createBill', [midAuth.ensureAuth], billController.createBill);
-api.get('/getBills',[midAuth.ensureAuth],billController.searchBills)
+//* Administrador 
+api.get('/testBill', [midAuth.ensureAuth, midAuth.isAdmin], billController.testBill);
+
+//* Usuarios registrados 
+api.get('/myBills', [midAuth.ensureAuth, midAuth.isClient], billController.myBills);
+api.get('/myBill/:idBill', [midAuth.ensureAuth, midAuth.isClient], billController.myBill);
+
+//* Administrador del hotel 
+api.post('/checkInReservation/:idHotel/:idReservation', [midAuth.ensureAuth, midAuth.isHotelAdmin], billController.checkInReservation)
+
+api.get('/getBills/:idHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], billController.getBills);
+api.get('/getBill/:idHotel/:idBill', [midAuth.ensureAuth, midAuth.isHotelAdmin], billController.getBill);
+
 
 module.exports = api;

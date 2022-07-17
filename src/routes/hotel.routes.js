@@ -2,8 +2,8 @@
 
 const express = require('express');
 const api = express.Router();
-const hotelController = require('../controllers/hotel.controller');
 const midAuth = require('../services/auth');
+const hotelController = require('../controllers/hotel.controller');
 
 const connectMultiparty = require('connect-multiparty');
 const upload = connectMultiparty({ uploadDir: './uploads/hotels' });

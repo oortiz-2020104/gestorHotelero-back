@@ -13,7 +13,6 @@ exports.testReservation = (req, res) => {
 }
 
 //* Funciones usuario registrado ---------------------------------------------------------------------------------------
-
 exports.reserveRoom = async (req, res) => {
     try {
         const userId = req.user.sub
@@ -110,7 +109,11 @@ exports.myReserve = async (req, res) => {
             if (!myReservation) {
                 return res.status(400).send({ message: 'Actualmente no cuentas con una reservación' });
             } else {
-                return res.send({ message: 'Tú reservación', myReservation })
+                myReservation.startDate = new Date(myReservation.startDate).toISOString().split("T")[0];
+                myReservation.endDate = new Date(myReservation.endDate).toISOString().split("T")[0];
+
+
+                return res.send({ message: 'Tú reservación', myReservation, services: myReservation.services })
             }
         }
     } catch (err) {
@@ -162,7 +165,6 @@ exports.addServiceMyReserve = async (req, res) => {
 }
 
 //* Funciones admnistrador del hotel ---------------------------------------------------------------------------------------
-
 exports.getReservations = async (req, res) => {
     try {
         const hotelId = req.params.idHotel;
@@ -173,10 +175,22 @@ exports.getReservations = async (req, res) => {
         if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
             return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
         } else {
-            const reservations = await Reservation.find({ hotel: hotelId }).populate('hotel').populate('room').populate('services.service').lean();
+            const reservations = await Reservation.find({ hotel: hotelId }).populate('user').populate('room').lean();
             if (!reservations) {
                 return res.staus(400).send({ message: 'No se encontraron reservaciones' });
             } else {
+                for (let i = 0; i < reservations.length; i++) {
+                    delete reservations[i].user.password
+                    delete reservations[i].user.reservations
+                    delete reservations[i].user.history
+                    delete reservations[i].user.bills
+                    delete reservations[i].user.currentReservation
+                    delete reservations[i].user.role
+
+                    reservations[i].startDate = new Date(reservations[i].startDate).toISOString().split("T")[0];
+                    reservations[i].endDate = new Date(reservations[i].endDate).toISOString().split("T")[0];
+                }
+
                 return res.send({ messsage: 'Reservaciones encontradas', reservations });
             }
         }
@@ -188,19 +202,29 @@ exports.getReservations = async (req, res) => {
 
 exports.getReservation = async (req, res) => {
     try {
+        const userId = req.user.sub
         const hotelId = req.params.idHotel
         const reservationId = req.params.idReservation;
-        const userId = req.user.sub
 
         const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
         if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
             return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
         } else {
-            const checkReservationHotel = await Reservation.findOne({ _id: reservationId, hotel: hotelId }).populate('hotel').populate('room').populate('services.service').lean();
+            const checkReservationHotel = await Reservation.findOne({ _id: reservationId, hotel: hotelId }).populate('user').populate('room').populate('services.service').lean();
             if (checkReservationHotel == null || checkReservationHotel.hotel._id != hotelId) {
                 return res.status(400).send({ message: 'No puedes ver esta reservación' });
             } else {
-                return res.send({ message: 'Reservación encontrada', checkReservationHotel });
+                delete checkReservationHotel.user.reservations
+                delete checkReservationHotel.user.password
+                delete checkReservationHotel.user.history
+                delete checkReservationHotel.user.bills
+                delete checkReservationHotel.user.currentReservation
+                delete checkReservationHotel.user.role
+
+                checkReservationHotel.startDate = new Date(checkReservationHotel.startDate).toISOString().split("T")[0];
+                checkReservationHotel.endDate = new Date(checkReservationHotel.endDate).toISOString().split("T")[0];
+
+                return res.send({ message: 'Reservación encontrada', checkReservationHotel, services: checkReservationHotel.services });
             }
         }
     } catch (err) {
@@ -290,12 +314,12 @@ exports.cancelReservation = async (req, res) => {
                         return res.status(400).send({ message: 'Esta reservación ya fue facturada' });
                     } else {
                         if (checkReservationHotel.state == 'Cancelada y facturada') {
-                            return res.status(400).send({ message: 'Esta reservación ya fue facturada' });
+                            return res.status(400).send({ message: 'Esta reservación ya fue cacelada y facturada' });
                         } else {
                             await User.findOneAndUpdate({ _id: checkReservationHotel.user }, { $unset: { currentReservation: 1 } }, { new: true }).lean();
                             await Room.findOneAndUpdate({ _id: checkReservationHotel.room._id }, { available: true, dateAvailable: 'Disponible', $unset: { currentUser: 1 } }, { new: true }).lean();
                             await Reservation.findOneAndUpdate({ _id: reservationId }, { state: 'Cancelada' }, { new: true }).lean()
-        
+
                             return res.send({ message: 'Reservación cancelada' });
                         }
                     }
