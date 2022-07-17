@@ -210,6 +210,9 @@ exports.getEvents_Clients = async (req, res) => {
         if (!events) {
             return res.status(400).send({ message: 'Eventos no encontrados' });
         } else {
+            for (let i = 0; i < events.length; i++) {
+                events[i].dateEvent = new Date(events[i].dateEvent).toISOString().split("T")[0];
+            }
             return res.send({ message: 'Eventos encontrados', events })
         }
     } catch (err) {

@@ -145,7 +145,7 @@ exports.myBills = async (req, res) => {
             .populate('hotel')
             .populate({ path: 'reservation', populate: { path: 'room' } })
             .lean()
-        if (!bills || bills.length === 0) {
+        if (!bills) {
             return res.status(404).send({ message: 'No se pudieron encontrar tus facturas' })
         } else {
             for (let i = 0; i < bills.length; i++) {
@@ -168,7 +168,7 @@ exports.myBill = async (req, res) => {
 
         const checkBillUser = await Bill.findOne({ user: userId, _id: billId }).lean()
         console.log(checkBillUser);
-        if (checkBillUser.length == 0 || checkBillUser == null) {
+        if (checkBillUser == null) {
             return res.status(400).send({ message: 'No se encontro la factura en tu cuenta' });
         } else {
             const bill = await Bill.findOne({ user: userId, _id: billId })

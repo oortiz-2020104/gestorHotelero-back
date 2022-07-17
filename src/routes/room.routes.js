@@ -10,6 +10,9 @@ api.get('/test', [midAuth.ensureAuth, midAuth.isAdmin], roomController.test);
 
 //* Usuarios registrados
 api.get('/getRooms_Clients/:idHotel', midAuth.ensureAuth, roomController.getRooms_Clients);
+api.get('/getRoomsAvailable_Clients/:idHotel', midAuth.ensureAuth, roomController.getRoomsAvailable_Clients);
+api.get('/getRoomsNoAvailable_Clients/:idHotel', midAuth.ensureAuth, roomController.getRoomsNoAvailable_Clients);
+api.get('/getRoom_Clients/:idHotel/:idRoom', midAuth.ensureAuth, roomController.getRoom_Clients);
 
 //* Administrador del hotel
 api.post('/addRoom', [midAuth.ensureAuth, midAuth.isHotelAdmin], roomController.addRoom);
