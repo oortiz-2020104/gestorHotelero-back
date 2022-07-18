@@ -140,17 +140,21 @@ exports.addServiceMyReserve = async (req, res) => {
                 if (!myReservation) {
                     return res.status(400).send({ message: 'Actualmente no cuentas con una reservación' });
                 } else {
-                    const hotelId = myReservation.hotel
-                    const checkServiceHotel = await Service.findOne({ _id: data.service, hotel: hotelId }).lean()
-                    if (!checkServiceHotel || checkServiceHotel == null) {
-                        return res.status(400).send({ message: 'Este servicio no se encuentra en el hotel que haz reservado' });
+                    if (myReservation.state != 'En curso') {
+                        return res.status(400).send({ message: 'Esta reservación ya no esta en curso' });
                     } else {
-                        let servicePrice = checkServiceHotel.price * parseInt(data.quantity)
-                        let newTotalPrice = myReservation.totalPrice + servicePrice
+                        const hotelId = myReservation.hotel
+                        const checkServiceHotel = await Service.findOne({ _id: data.service, hotel: hotelId }).lean()
+                        if (!checkServiceHotel || checkServiceHotel == null) {
+                            return res.status(400).send({ message: 'Este servicio no se encuentra en el hotel que haz reservado' });
+                        } else {
+                            let servicePrice = checkServiceHotel.price * parseInt(data.quantity)
+                            let newTotalPrice = myReservation.totalPrice + servicePrice
 
-                        const pushService = await Reservation.findOneAndUpdate({ _id: checkUser.currentReservation }, { totalPrice: newTotalPrice, $push: { services: { quantity: data.quantity, service: data.service } } }, { new: true }).lean()
+                            const pushService = await Reservation.findOneAndUpdate({ _id: checkUser.currentReservation }, { totalPrice: newTotalPrice, $push: { services: { quantity: data.quantity, service: data.service } } }, { new: true }).lean()
 
-                        return res.send({ message: 'Servicio añadido', pushService })
+                            return res.send({ message: 'Servicio añadido', pushService })
+                        }
                     }
                 }
             }
@@ -175,6 +179,146 @@ exports.getReservations = async (req, res) => {
             return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
         } else {
             const reservations = await Reservation.find({ hotel: hotelId }).populate('user').populate('room').lean();
+            if (!reservations) {
+                return res.staus(400).send({ message: 'No se encontraron reservaciones' });
+            } else {
+                for (let i = 0; i < reservations.length; i++) {
+                    delete reservations[i].user.password
+                    delete reservations[i].user.reservations
+                    delete reservations[i].user.history
+                    delete reservations[i].user.bills
+                    delete reservations[i].user.currentReservation
+                    delete reservations[i].user.role
+
+                    reservations[i].startDate = new Date(reservations[i].startDate).toISOString().split("T")[0];
+                    reservations[i].endDate = new Date(reservations[i].endDate).toISOString().split("T")[0];
+                }
+
+                return res.send({ messsage: 'Reservaciones encontradas', reservations });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo las reservaciones' });
+    }
+}
+
+exports.getReservationsInProgress = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel;
+        const userId = req.user.sub;
+
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        console.log(checkUserHotel);
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
+        } else {
+            const reservations = await Reservation.find({ hotel: hotelId, state: 'En curso' }).populate('user').populate('room').lean();
+            if (!reservations) {
+                return res.staus(400).send({ message: 'No se encontraron reservaciones' });
+            } else {
+                for (let i = 0; i < reservations.length; i++) {
+                    delete reservations[i].user.password
+                    delete reservations[i].user.reservations
+                    delete reservations[i].user.history
+                    delete reservations[i].user.bills
+                    delete reservations[i].user.currentReservation
+                    delete reservations[i].user.role
+
+                    reservations[i].startDate = new Date(reservations[i].startDate).toISOString().split("T")[0];
+                    reservations[i].endDate = new Date(reservations[i].endDate).toISOString().split("T")[0];
+                }
+
+                return res.send({ messsage: 'Reservaciones encontradas', reservations });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo las reservaciones' });
+    }
+}
+
+exports.getReservationsBilled = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel;
+        const userId = req.user.sub;
+
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        console.log(checkUserHotel);
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
+        } else {
+            const reservations = await Reservation.find({ hotel: hotelId, state: 'Facturada' }).populate('user').populate('room').lean();
+            if (!reservations) {
+                return res.staus(400).send({ message: 'No se encontraron reservaciones' });
+            } else {
+                for (let i = 0; i < reservations.length; i++) {
+                    delete reservations[i].user.password
+                    delete reservations[i].user.reservations
+                    delete reservations[i].user.history
+                    delete reservations[i].user.bills
+                    delete reservations[i].user.currentReservation
+                    delete reservations[i].user.role
+
+                    reservations[i].startDate = new Date(reservations[i].startDate).toISOString().split("T")[0];
+                    reservations[i].endDate = new Date(reservations[i].endDate).toISOString().split("T")[0];
+                }
+
+                return res.send({ messsage: 'Reservaciones encontradas', reservations });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo las reservaciones' });
+    }
+}
+
+exports.getReservationsCancelled = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel;
+        const userId = req.user.sub;
+
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        console.log(checkUserHotel);
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
+        } else {
+            const reservations = await Reservation.find({ hotel: hotelId, state: 'Cancelada' }).populate('user').populate('room').lean();
+            if (!reservations) {
+                return res.staus(400).send({ message: 'No se encontraron reservaciones' });
+            } else {
+                for (let i = 0; i < reservations.length; i++) {
+                    delete reservations[i].user.password
+                    delete reservations[i].user.reservations
+                    delete reservations[i].user.history
+                    delete reservations[i].user.bills
+                    delete reservations[i].user.currentReservation
+                    delete reservations[i].user.role
+
+                    reservations[i].startDate = new Date(reservations[i].startDate).toISOString().split("T")[0];
+                    reservations[i].endDate = new Date(reservations[i].endDate).toISOString().split("T")[0];
+                }
+
+                return res.send({ messsage: 'Reservaciones encontradas', reservations });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo las reservaciones' });
+    }
+}
+
+exports.getReservationsCancelledAndBilled = async (req, res) => {
+    try {
+        const hotelId = req.params.idHotel;
+        const userId = req.user.sub;
+
+        const checkUserHotel = await Hotel.findOne({ _id: hotelId }).lean()
+        console.log(checkUserHotel);
+        if (checkUserHotel == null || checkUserHotel.adminHotel != userId) {
+            return res.status(400).send({ message: 'No puedes ver las reservaciones de este hotel' });
+        } else {
+            const reservations = await Reservation.find({ hotel: hotelId, state: 'Cancelada y facturada' }).populate('user').populate('room').lean();
             if (!reservations) {
                 return res.staus(400).send({ message: 'No se encontraron reservaciones' });
             } else {
@@ -275,14 +419,18 @@ exports.deleteServiceReservation = async (req, res) => {
                 if (!service || service == null) {
                     return res.status(400).send({ message: 'No puedes eliminar este servicio' });
                 } else {
-                    const serviceTotal = service.service.price * service.quantity
-                    const newTotal = checkReservationHotel.totalPrice - serviceTotal
-                    await Reservation.findOneAndUpdate({ _id: reservationId }, { totalPrice: newTotal }, { new: true }).lean();
+                    if (checkReservationHotel.state != 'En curso') {
+                        return res.status(400).send({ message: 'Esta reservación ya no esta en curso' });
+                    } else {
+                        const serviceTotal = service.service.price * service.quantity
+                        const newTotal = checkReservationHotel.totalPrice - serviceTotal
+                        await Reservation.findOneAndUpdate({ _id: reservationId }, { totalPrice: newTotal }, { new: true }).lean();
 
-                    await reservation.services.pull(serviceId);
-                    await reservation.save();
+                        await reservation.services.pull(serviceId);
+                        await reservation.save();
 
-                    return res.send({ message: 'Servicio eliminado' });
+                        return res.send({ message: 'Servicio eliminado' });
+                    }
                 }
             }
         }
