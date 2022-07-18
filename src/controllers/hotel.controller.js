@@ -144,7 +144,7 @@ exports.getHotels_NoClients = async (req, res) => {
 
 exports.getHotels_Clients = async (req, res) => {
     try {
-        const hotels = await Hotel.find()
+        const hotels = await Hotel.find().lean()
         if (!hotels) {
             return res.status(400).send({ message: 'Hoteles no encontrados' });
         } else {

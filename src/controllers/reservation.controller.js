@@ -112,7 +112,6 @@ exports.myReserve = async (req, res) => {
                 myReservation.startDate = new Date(myReservation.startDate).toISOString().split("T")[0];
                 myReservation.endDate = new Date(myReservation.endDate).toISOString().split("T")[0];
 
-
                 return res.send({ message: 'Tú reservación', myReservation, services: myReservation.services })
             }
         }
