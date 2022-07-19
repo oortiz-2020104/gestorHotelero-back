@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 exports.init = () => {
-    const uriMongo = 'mongodb://127.0.0.1:27017/gestorHotelero';
+    const uriMongo = 'mongodb+srv://oortiz:oortiz@gestorhotelero.kywjzzk.mongodb.net/?retryWrites=true&w=majority';
     mongoose.Promise = global.Promise;
 
     mongoose.connection.on('error', () => {
