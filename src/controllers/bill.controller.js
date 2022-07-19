@@ -28,9 +28,20 @@ exports.checkInReservation = async (req, res) => {
                 return res.status(400).send({ message: 'No puedes ver esta reservación' });
             } else {
                 if (checkReservationHotel.state == 'Cancelada') {
-                    await User.findOneAndUpdate({ _id: checkReservationHotel.user }, { $unset: { currentReservation: 1 } }, { new: true }).lean();
                     await Room.findOneAndUpdate({ _id: checkReservationHotel.room._id }, { available: true, dateAvailable: 'Disponible', $unset: { currentUser: 1 } }, { new: true }).lean();
                     await Reservation.findOneAndUpdate({ _id: reservationId }, { state: 'Cancelada y facturada' }, { new: true }).lean()
+                    
+                    let data = {
+                        user: checkReservationHotel.user,
+                        hotel: checkReservationHotel.hotel._id,
+                        total: checkReservationHotel.totalPrice,
+                        reservation: reservationId
+                    }
+                    const bill = new Bill(data);
+                    await bill.save();
+                    
+                    await User.findOneAndUpdate({ _id: checkReservationHotel.user }, { $unset: { currentReservation: 1 }, $push: { bills: bill._id } }, { new: true }).lean();
+
                     return res.send({ message: 'Reservación cancelada facturada' });
                 }
 
@@ -52,7 +63,6 @@ exports.checkInReservation = async (req, res) => {
                     reservation: reservationId
                 }
                 const bill = new Bill(data);
-                console.log(bill);
                 await bill.save();
 
                 await User.findOneAndUpdate({ _id: checkReservationHotel.user }, { $unset: { currentReservation: 1 }, $push: { bills: bill._id } }, { new: true }).lean();

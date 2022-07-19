@@ -14,6 +14,7 @@ api.get('/testHotel', [midAuth.ensureAuth, midAuth.isAdmin], hotelController.tes
 api.post('/addHotel_OnlyAdmin', [midAuth.ensureAuth, midAuth.isAdmin], hotelController.addHotel_OnlyAdmin);
 
 api.get('/getHotels_OnlyAdmin', [midAuth.ensureAuth, midAuth.isAdmin], hotelController.getHotels_OnlyAdmin);
+api.get('/getHotels_OrderByPopularity_OnlyAdmin', [midAuth.ensureAuth, midAuth.isAdmin], hotelController.getHotels_OrderByPopularity_OnlyAdmin);
 api.get('/getHotel_OnlyAdmin/:id', [midAuth.ensureAuth, midAuth.isAdmin], hotelController.getHotel_OnlyAdmin);
 
 api.put('/updateHotel_OnlyAdmin/:id', [midAuth.ensureAuth, midAuth.isAdmin], hotelController.updateHotel_OnlyAdmin);
@@ -25,12 +26,14 @@ api.get('/getHotels_NoClients', hotelController.getHotels_NoClients);
 
 //* Usuarios registrados
 api.get('/getHotels_Clients', midAuth.ensureAuth, hotelController.getHotels_Clients);
+api.get('/getHotelsHistory', midAuth.ensureAuth, hotelController.getHotelsHistory);
 api.get('/getHotel_Clients/:id', midAuth.ensureAuth, hotelController.getHotel_Clients);
 
 //* Administrador del hotel
 api.post('/addHotel', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.addHotel);
 
 api.get('/getHotels', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.getHotels);
+api.get('/getHotels_OrderByPopularity', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.getHotels_OrderByPopularity);
 api.get('/getHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.getHotel);
 
 api.put('/updateHotel/:id', [midAuth.ensureAuth, midAuth.isHotelAdmin], hotelController.updateHotel);

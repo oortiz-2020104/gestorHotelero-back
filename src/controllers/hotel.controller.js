@@ -2,6 +2,7 @@
 
 const { validateData, findHotel, checkDeleteHotel, checkUpdateHotel, checkUpdateHotel_OnlyAdmin, findUser, findUserHotel, validateExtension } = require('../utils/validate');
 
+const User = require('../models/user.model')
 const Hotel = require('../models/hotel.model');
 const fs = require('fs');
 const path = require('path');
@@ -49,6 +50,20 @@ exports.addHotel_OnlyAdmin = async (req, res) => {
 exports.getHotels_OnlyAdmin = async (req, res) => {
     try {
         const hotels = await Hotel.find().populate('adminHotel')
+        if (!hotels) {
+            return res.status(400).send({ message: 'Hoteles no encontrados' });
+        } else {
+            return res.send({ messsage: 'Hoteles encontrados:', hotels });
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo estos hoteles' });
+    }
+}
+
+exports.getHotels_OrderByPopularity_OnlyAdmin = async (req, res) => {
+    try {
+        const hotels = await Hotel.find().sort({ timesRequest: -1 }).populate('adminHotel')
         if (!hotels) {
             return res.status(400).send({ message: 'Hoteles no encontrados' });
         } else {
@@ -156,6 +171,20 @@ exports.getHotels_Clients = async (req, res) => {
     }
 }
 
+exports.getHotelsHistory = async (req, res) => {
+    try {
+        const historyHotels = await User.findOne({ _id: req.user.sub }).populate('history').lean()
+        if (!historyHotels) {
+            return res.status(400).send({ message: 'Hoteles no encontrados' });
+        } else {
+            return res.send({ messsage: 'Hoteles encontrados', hotels: historyHotels.history });
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo estos hoteles' });
+    }
+}
+
 exports.getHotel_Clients = async (req, res) => {
     try {
         const hotelId = req.params.id;
@@ -206,6 +235,22 @@ exports.getHotels = async (req, res) => {
     try {
         const userId = req.user.sub
         const hotels = await Hotel.find({ adminHotel: userId })
+
+        if (!hotels) {
+            return res.status(400).send({ message: 'Hoteles no encontrados' });
+        } else {
+            return res.send({ messsage: 'Hoteles encontrados', hotels });
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Error obteniendo estos hoteles' });
+    }
+}
+
+exports.getHotels_OrderByPopularity = async (req, res) => {
+    try {
+        const userId = req.user.sub
+        const hotels = await Hotel.find({ adminHotel: userId }).sort({ timesRequest: -1 })
 
         if (!hotels) {
             return res.status(400).send({ message: 'Hoteles no encontrados' });
