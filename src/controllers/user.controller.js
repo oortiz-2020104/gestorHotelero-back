@@ -333,6 +333,7 @@ exports.uploadImage = async (req, res) => {
             //ruta en la que llega la imagen
             const filePath = req.files.image.path; // \uploads\users\file_name.ext
 
+            console.log(filePath)
             //separar en jerarquía la ruta de la imágen (linux o MAC: ('\'))
             const fileSplit = filePath.split('\\');// fileSplit = ['uploads', 'users', 'file_name.ext']
             const fileName = fileSplit[2];// fileName = file_name.ext
