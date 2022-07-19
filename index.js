@@ -1,7 +1,7 @@
 'use strict'
 const app = require('./configs/app');
 const mongo = require('./configs/mongoConfig');
-const port = 3200;
+const port = 3200 || process.env.PORT;
 
 const { findUser, encrypt } = require('./src/utils/validate');
 const User = require('./src/models/user.model');
