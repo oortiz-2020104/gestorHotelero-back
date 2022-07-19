@@ -13,7 +13,7 @@ exports.init = () => {
     mongoose.connection.on('connecting', () => {
         console.log('MongoDB | Estableciendo conexión...');
     });
-    mongoose.connection.on('connected', () => {
+    mongoose.connection.prependOnceListener('connected', () => {
         console.log('MongoDB | Conexión establecida a MongoDB');
     });
     mongoose.connection.once('open', () => {
