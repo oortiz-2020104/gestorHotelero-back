@@ -364,10 +364,10 @@ exports.uploadImageHotel = async (req, res) => {
                 const filePath = req.files.image.path; // \uploads\users\file_name.ext
 
                 //separar en jerarquía la ruta de la imágen (linux o MAC: ('\'))
-                const fileSplit = filePath.split('\\');// fileSplit = ['uploads', 'users', 'file_name.ext']
+                const fileSplit = filePath.split('/');// fileSplit = ['uploads', 'users', 'file_name.ext']
                 const fileName = fileSplit[2];// fileName = file_name.ext
 
-                const extension = fileName.split('\.'); // extension = ['file_name', 'ext']
+                const extension = fileName.split('.'); // extension = ['file_name', 'ext']
                 const fileExt = extension[1]; // fileExt = ext;
 
                 const validExt = await validateExtension(fileExt, filePath);
